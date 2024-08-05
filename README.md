@@ -13,10 +13,7 @@ Here is another MileStone Project,As an IT-ayan the time has come to harness eac
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/ahmedabougabal/mernStackMilestoneProject_ITI)
 ![GitHub contributors](https://img.shields.io/github/contributors/ahmedabougabal/mernStackMilestoneProject_ITI)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ahmedabougabal/mernStackMilestoneProject_ITI)
-
-## Profile Views
-
-![Profile Views](https://komarev.com/ghpvc/?username=ahmedabougabal&color=blue)
+![RepoViews](https://komarev.com/ghpvc/?username=ahmedabougabal&color=blue)
 
 ## Project Overview
 
