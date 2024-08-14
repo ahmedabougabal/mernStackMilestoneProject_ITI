@@ -1,39 +1,31 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-// ID : {
-//     type: String,
-// },
-name : {
+  // ID : {
+  //     type: String,
+  // },
+  name: {
     type: String,
     required: true,
-
-},
-CategoryId : {
+  },
+  CategoryId: {
     type: Number,
     required: true,
-
-},
-AuthorId : {
+  },
+  AuthorId: {
     type: Number,
     required: true,
-
-},
-image : {
+  },
+  image: {
     type: String,
     required: true,
-
-},
-description : {
+  },
+  description: {
     type: String,
+  },
+  reviews: {
+    type: Array,
+  },
+});
 
-},
-reviews : {
-    type : Array
-
-}
-
-})
-
-export  const Book = mongoose.model('Book',schema);
-;
+export const Book = mongoose.model("Book", schema);
