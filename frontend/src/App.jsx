@@ -1,7 +1,14 @@
+import Navbar from "./components/Navbar"
+import {Outlet} from 'react-router-dom'
+import './index.css';
+import { useState } from "react";
+
 function App() {
+  const [count,setCount] = useState(0);
   return (
     <>
-      <h1>Mahmoud ismail</h1>
+    <Navbar/>
+    <Outlet/>
     </>
   )
 }
