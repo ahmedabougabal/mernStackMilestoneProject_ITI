@@ -1,2 +1,2 @@
-PORT=
-MONGO_URI=
+PORT= 5200
+MONGO_URI= mongodb+srv://bookStore:12345@bookstore.mwgfy.mongodb.net/
