@@ -1,21 +1,21 @@
 import express from "express";
 import { Category } from "../models/Category.js";
-import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
 // Route to Add a New Category
 router.post("/addCategory", async (request, response) => {
   try {
-    const { name } = request.body;
+    const { id, name } = request.body;
 
-    if (!name) {
+    if (!id || !name) {
       return response.status(400).send({
         message: "Send all required fields",
       });
     }
 
     const newCategory = {
+      id,
       name,
     };
 
@@ -110,15 +110,6 @@ router.delete("/categories/:id", async (request, response) => {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
-});
-
-// Get all books in a specific category
-router.get("/:categoryId/books", async (req, res) => {
-  const { categoryId } = req.params;
-  const books = await Book.find({ category: categoryId }).populate(
-    "category author"
-  );
-  res.json(books);
 });
 
 export default router;
