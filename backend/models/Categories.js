@@ -1,19 +1,8 @@
 import mongoose from "mongoose";
 
-// Import the Book model to use for referencing
-import { Book } from "./Book.js";
-
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  books: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
+const CategorySchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  name: { type: String, required: true },
 });
 
-export const Category = mongoose.model("Category", categorySchema);
+export const Category = mongoose.model("Category", CategorySchema);
