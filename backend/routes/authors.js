@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import { Author } from "../models/Author.js";
 
 const router = express.Router();
@@ -6,16 +7,17 @@ const router = express.Router();
 // Route to Add a New Author
 router.post("/addAuthor", async (request, response) => {
   try {
-    const { firstName, lastName, birthDate, books } = request.body;
+    const { id, firstName, lastName, birthDate, books } = request.body;
 
-    if (!firstName || !lastName || !birthDate) {
+    if (!id || !firstName || !lastName || !birthDate) {
       return response.status(400).send({
         message: "Send all required fields",
       });
     }
 
+    // Create the new author object
     const newAuthor = {
-      AuthorId: request.body.AuthorId, // Assuming you handle this elsewhere or it is part of the request
+      id,
       firstName,
       lastName,
       birthDate,
@@ -34,7 +36,7 @@ router.post("/addAuthor", async (request, response) => {
 // Route to Get All Authors
 router.get("/authors", async (request, response) => {
   try {
-    const authors = await Author.find({}).populate("books"); // Populate books to show book details
+    const authors = await Author.find({});
 
     return response.status(200).json({
       count: authors.length,
@@ -51,7 +53,11 @@ router.get("/authors/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const author = await Author.findById(id).populate("books");
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: "Invalid author ID format" });
+    }
+
+    const author = await Author.findById(id);
 
     if (!author) {
       return response.status(404).json({ message: "Author not found" });
@@ -67,15 +73,18 @@ router.get("/authors/:id", async (request, response) => {
 // Route to Update an Author
 router.put("/authors/:id", async (request, response) => {
   try {
+    const { id } = request.params;
     const { firstName, lastName, birthDate, books } = request.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: "Invalid author ID format" });
+    }
 
     if (!firstName || !lastName || !birthDate) {
       return response.status(400).send({
         message: "Send all required fields",
       });
     }
-
-    const { id } = request.params;
 
     const updatedAuthor = {
       firstName,
@@ -86,7 +95,7 @@ router.put("/authors/:id", async (request, response) => {
 
     const result = await Author.findByIdAndUpdate(id, updatedAuthor, {
       new: true,
-    }).populate("books");
+    });
 
     if (!result) {
       return response.status(404).json({ message: "Author not found" });
@@ -105,6 +114,10 @@ router.put("/authors/:id", async (request, response) => {
 router.delete("/authors/:id", async (request, response) => {
   try {
     const { id } = request.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: "Invalid author ID format" });
+    }
 
     const result = await Author.findByIdAndDelete(id);
 

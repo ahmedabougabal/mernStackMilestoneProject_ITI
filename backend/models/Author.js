@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 
 // Define the Author schema
 const authorSchema = new mongoose.Schema({
-  AuthorId: {
+  id: {
     type: Number,
-    required: true,
     unique: true,
   },
   firstName: {
@@ -19,12 +18,9 @@ const authorSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  books: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Book", // Reference to the Book model
-    },
-  ],
+  books: {
+    type: String,
+  },
 });
 
 // Create the Author model
