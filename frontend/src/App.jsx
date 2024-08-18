@@ -1,15 +1,7 @@
-<<<<<<< Updated upstream
-
 import { useEffect } from 'react';
-import './app.css';
 import axios from 'axios';
 // import { response } from 'express';
 // import Home from './pages/Home'
-=======
-import { useEffect } from 'react';  
-import axios from 'axios';
-
->>>>>>> Stashed changes
 
 function App() {
 
