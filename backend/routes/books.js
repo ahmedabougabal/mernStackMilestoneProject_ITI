@@ -5,20 +5,15 @@ const router = express.Router();
 
 router.post("/addBook", async (request, response) => {
   try {
-    if (
-      !request.body.name ||
-      !request.body.AuthorId ||
-      !request.body.CategoryId ||
-      !request.body.image
-    ) {
+    if (!request.body.name || !request.body.author || !request.body.category) {
       return response.status(400).send({
         message: "Send all required fields",
       });
     }
     const newBook = {
       name: request.body.name,
-      AuthorId: request.body.AuthorId,
-      CategoryId: request.body.CategoryId,
+      author: request.body.author,
+      category: request.body.category,
       image: request.body.image,
     };
 
@@ -63,12 +58,7 @@ router.get("/books/:id", async (request, response) => {
 // Route for Update a Book
 router.put("/:id", async (request, response) => {
   try {
-    if (
-      !request.body.name ||
-      !request.body.AuthorId ||
-      !request.body.CategoryId ||
-      !request.body.image
-    ) {
+    if (!request.body.name || !request.body.author || !request.body.category) {
       return response.status(400).send({
         message: "Send all required fields",
       });
