@@ -1,39 +1,39 @@
-import express from 'express';
-import { Book } from '../models/Book.js';
+import express from "express";
+import mongoose from "mongoose";
+import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
-router.post('/addBook',async (request, response)=>{
-    try {
-        if (
-          !request.body.name ||
-          !request.body.AuthorId ||
-          !request.body.CategoryId ||
-          !request.body.image 
-        ) {
-          return response.status(400).send({
-            message: 'Send all required fields',
-          });
-        }
-        const newBook = {
-        name: request.body.name,
-        AuthorId: request.body.AuthorId,
-        CategoryId: request.body.CategoryId,
-        image: request.body.image,
-        };
-    
-        const book = await Book.create(newBook);
-    
-        return response.status(201).send(book);
-      } catch (error) {
-        console.log(error.message);
-        response.status(500).send({ message: error.message });
-      }
+router.post("/addBook", async (request, response) => {
+  try {
+    if (
+      !request.body.name ||
+      !request.body.AuthorId ||
+      !request.body.Category ||
+      !request.body.image
+    ) {
+      return response.status(400).send({
+        message: "Send all required fields",
+      });
+    }
+    const newBook = {
+      name: request.body.name,
+      AuthorId: request.body.AuthorId,
+      Category: request.body.Category,
+      image: request.body.image,
+    };
 
-})
+    const book = await Book.create(newBook);
+
+    return response.status(201).send(book);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
 
 // Route for Get All Books from database
-router.get('/', async (request, response) => {
+router.get("/", async (request, response) => {
   try {
     const books = await Book.find({});
 
@@ -48,11 +48,19 @@ router.get('/', async (request, response) => {
 });
 
 // Route for Get One Book from database by id
-router.get('/:id', async (request, response) => {
+router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
+
     const book = await Book.findById(id);
+    
+    if (!book) {
+      return response.status(404).json({ message: "Book not found" });
+    }
 
     return response.status(200).json(book);
   } catch (error) {
@@ -62,28 +70,32 @@ router.get('/:id', async (request, response) => {
 });
 
 // Route for Update a Book
-router.put('/:id', async (request, response) => {
+router.put("/:id", async (request, response) => {
   try {
     if (
       !request.body.name ||
       !request.body.AuthorId ||
-      !request.body.CategoryId ||
-      !request.body.image 
+      !request.body.Category ||
+      !request.body.image
     ) {
       return response.status(400).send({
-        message: 'Send all required fields',
+        message: "Send all required fields",
       });
     }
 
     const { id } = request.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
+
     const result = await Book.findByIdAndUpdate(id, request.body);
 
     if (!result) {
-      return response.status(404).json({ message: 'Book not found' });
+      return response.status(404).json({ message: "Book not found" });
     }
 
-    return response.status(200).send({ message: 'Book updated successfully' });
+    return response.status(200).send({ message: "Book updated successfully" });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
@@ -91,22 +103,73 @@ router.put('/:id', async (request, response) => {
 });
 
 // Route for Delete a book
-router.delete('/:id', async (request, response) => {
+router.delete("/:id", async (request, response) => {
   try {
     const { id } = request.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
 
     const result = await Book.findByIdAndDelete(id);
 
     if (!result) {
-      return response.status(404).json({ message: 'Book not found' });
+      return response.status(404).json({ message: "Book not found" });
     }
 
-    return response.status(200).send({ message: 'Book deleted successfully' });
+    return response.status(200).send({ message: "Book deleted successfully" });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
+
+
+
+
+
+router.get("/author/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    // if (!mongoose.Types.ObjectId.isValid(id)) {
+    //   return response.status(400).json({ message: 'Invalid author ID.' });
+    // }
+
+
+    const book = await Book.find({author: +id});
+
+    if (!book) {
+      return response.status(404).json({ message: "Book not found" });
+    }
+    
+    return response.status(200).json(book);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
+
+router.get("/category/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const book = await Book.find({categories: id});
+
+    return response.status(200).json(book);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
+
+
+
+
+
+
 
 
 
