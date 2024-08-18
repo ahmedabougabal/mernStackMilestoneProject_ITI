@@ -18,5 +18,3 @@ const schema = new mongoose.Schema({
 });
 
 export const Book = mongoose.model("Book", schema);
-
-// comment
