@@ -7,7 +7,7 @@
   "scripts": {
     "backend": "nodemon backend/index.js",
     "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend"
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +27,9 @@
     "nodemon": "^3.1.4"
   },
   "devDependencies": {
-    "vite": "^5.4.1"
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0"
   }
 }
