@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 // const BookRouter = require('./routes/books.js');
 import booksRoute from "./routes/books.js";
 import authorRoutes from "./routes/authors.js";
-
+import categoryRoutes from "./routes/categories.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -21,6 +21,7 @@ app.use(cookieParser());
 // app.use("/books", booksRoute);
 app.use("/", booksRoute); // Use the books routes
 app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
+app.use("/", categoryRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running");
