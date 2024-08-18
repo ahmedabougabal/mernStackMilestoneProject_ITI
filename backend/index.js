@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 // app.use("/books", booksRoute);
-app.use("/api", booksRoute); // Use the books routes
-app.use("/api", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
+app.use("/", booksRoute); // Use the books routes
+app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
 
 app.get("/", (req, res) => {
   res.send("Server is running");
