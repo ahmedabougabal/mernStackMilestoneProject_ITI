@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
   },
   avgRating: { type: Number, default: 0 },
   ratingsCount: { type: Number, default: 0 },
-  image: String,
+  image: { type: String },
 });
 
 export const Book = mongoose.model("Book", schema);
