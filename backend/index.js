@@ -37,7 +37,7 @@ app.use("/", categoryRoutes);
 app.use("/", listRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server is running");
+    res.send("Server is running");
 });
 
 app.listen(Port, () => console.log(`server running on port: ${Port}`));
