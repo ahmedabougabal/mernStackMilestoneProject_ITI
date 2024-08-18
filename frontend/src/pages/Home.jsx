@@ -4,7 +4,7 @@ function Home() {
     return (
       <>
       <Header/>
-        <h1>asd</h1>
+        <h1>this is The Home Page :)</h1>
       </>
     )
   }

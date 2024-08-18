@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import axios from 'axios';
-// import { response } from 'express';
-// import Home from './pages/Home'
+import { Routes , Route} from 'react-router';
+import Home from './pages/Home'
+
 
 
 function App() {
@@ -13,10 +14,10 @@ function App() {
   },[])
 
   return (
-    <>
-      <Home/>
-      <h1>Mahmoud ismail</h1>
-    </>
+    <Routes>
+      <Route path='/' element={<Home />} />
+
+    </Routes>
   )
 }
 
