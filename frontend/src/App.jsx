@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { Routes , Route} from 'react-router';
-import Home from './pages/Home'
+import Home from './pages/HomePage'
 
 
 
