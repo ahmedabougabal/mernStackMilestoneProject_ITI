@@ -1,10 +1,4 @@
-import { useEffect } from 'react';
-import axios from 'axios';
-import { Routes , Route} from 'react-router';
 import Home from './pages/Home'
-
-
-
 function App() {
 
   useEffect(()=>{
@@ -14,10 +8,10 @@ function App() {
   },[])
 
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-
-    </Routes>
+    <>
+      <Home/>
+      <h1>Mahmoud ismail</h1>
+    </>
   )
 }
 

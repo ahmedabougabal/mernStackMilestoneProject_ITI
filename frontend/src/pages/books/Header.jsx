@@ -8,7 +8,7 @@ const Header = () => {
     // Function to fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5200/books');
+        const response = await axios.get('http://localhost:5000/api');
         console.log('Data fetched:', response); // Log data to the console
 
         setData(response); // Store data in state
