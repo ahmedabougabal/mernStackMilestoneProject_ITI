@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { Author } from "../models/Author.js";
+import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.post("/addAuthor", async (request, response) => {
   try {
     const { id, firstName, lastName, birthDate, books } = request.body;
 
-    if (!id || !firstName || !lastName || !birthDate) {
+    if (!firstName || !lastName || !birthDate) {
       return response.status(400).send({
         message: "Send all required fields",
       });
@@ -17,7 +18,6 @@ router.post("/addAuthor", async (request, response) => {
 
     // Create the new author object
     const newAuthor = {
-      id,
       firstName,
       lastName,
       birthDate,
@@ -132,6 +132,15 @@ router.delete("/authors/:id", async (request, response) => {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
+});
+
+// Get all books by a specific author
+router.get("/:authorId/books", async (req, res) => {
+  const { authorId } = req.params;
+  const books = await Book.find({ author: authorId }).populate(
+    "category author"
+  );
+  res.json(books);
 });
 
 export default router;
