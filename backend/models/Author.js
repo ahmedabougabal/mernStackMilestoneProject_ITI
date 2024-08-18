@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const authorSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  birthDate: {type :Date} ,
+  dateOfBirth: Date,
   books: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
 });
 
