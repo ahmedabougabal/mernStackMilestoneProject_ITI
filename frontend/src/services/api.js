@@ -7,19 +7,37 @@ export const getBooks = async () => {
   return await axios.get(`${API_URL}/books`);
 };
 
+// Fetch a single book by ID
+export const getBookById = async (id) => {
+  return await axios.get(`${API_URL}/books/${id}`);
+};
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- authors ---------------------------//
+//------------------------- ----------- ---------------------------//
+
 // Fetch all authors
 export const getAuthors = async () => {
   return await axios.get(`${API_URL}/authors`);
 };
 
+// Add a new Author
+export const addAuthor = async (authorData) => {
+  return await axios.post(`${API_URL}/addAuthor`, authorData);
+};
+
+// Delete a new Author
+export const deleteAuthor = async (id) => {
+  return await axios.delete(`${API_URL}/authors/${id}`);
+};
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- categories ---------------------------//
+//------------------------- ----------- ---------------------------//
+
 // Fetch all categories
 export const getCategories = async () => {
   return await axios.get(`${API_URL}/categories`);
-};
-
-// Fetch a single book by ID
-export const getBookById = async (id) => {
-  return await axios.get(`${API_URL}/books/${id}`);
 };
 
 // Add a new category
@@ -27,21 +45,12 @@ export const addCategory = async (categoryData) => {
   return await axios.post(`${API_URL}/addCategory`, categoryData);
 };
 
-// Update a category by ID
-export const updateCategory = async (id, categoryData) => {
-  return await axios.put(`${API_URL}/categories/${id}`, categoryData);
-};
-
 // Delete a category by ID
 export const deleteCategory = async (id) => {
   return await axios.delete(`${API_URL}/categories/${id}`);
 };
 
-// Add a new category
-export const addAuthor = async (authorData) => {
-  return await axios.post(`${API_URL}/addAuthor`, authorData);
-};
-
-export const deleteAuthor = async (id) => {
-  return await axios.delete(`${API_URL}/authors/${id}`);
+// Update a category by ID
+export const updateCategory = async (id, categoryData) => {
+  return await axios.put(`${API_URL}/categories/${id}`, categoryData);
 };
