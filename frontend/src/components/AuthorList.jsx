@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getAuthors, addAuthor, deleteAuthor } from '../services/api';
+import { getAuthors, addAuthor, deleteAuthor, updateAuthor } from '../services/api'; // Assuming updateAuthor function exists
 
 const AuthorManagement = () => {
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState({ firstName: '', lastName: '', birthDate: '' });
+  const [editingAuthorId, setEditingAuthorId] = useState(null); // State for editing mode
+  const [editingAuthor, setEditingAuthor] = useState({ firstName: '', lastName: '', birthDate: '' }); // State for editing author data
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -35,6 +37,30 @@ const AuthorManagement = () => {
       setAuthors(authors.filter(author => author._id !== id));
     } catch (error) {
       setError(error.message || 'Error deleting author');
+    }
+  };
+
+  const handleEditAuthor = (author) => {
+    setEditingAuthorId(author._id); // Set the author ID being edited
+    setEditingAuthor({ firstName: author.firstName, lastName: author.lastName, birthDate: author.birthDate }); // Pre-fill the input fields with the author's current data
+  };
+
+  const handleUpdateAuthor = async () => {
+    if (editingAuthor.firstName.trim() && editingAuthor.lastName.trim()) {
+      try {
+        const response = await updateAuthor(editingAuthorId, editingAuthor);
+        setAuthors(
+          authors.map((author) =>
+            author._id === editingAuthorId ? { ...author, ...editingAuthor } : author
+          )
+        );
+        setEditingAuthorId(null); // Exit editing mode
+        setEditingAuthor({ firstName: '', lastName: '', birthDate: '' }); // Clear input fields
+      } catch (error) {
+        setError(error.message || 'Error updating author');
+      }
+    } else {
+      setError('First name and last name cannot be empty');
     }
   };
 
@@ -83,11 +109,49 @@ const AuthorManagement = () => {
             authors.map((author) => (
               <tr key={author._id}>
                 <td className="py-2 px-4 border-b">{author._id}</td>
-                <td className="py-2 px-4 border-b">{author.firstName}</td>
-                <td className="py-2 px-4 border-b">{author.lastName}</td>
-                <td className="py-2 px-4 border-b">{author.birthDate}</td>
                 <td className="py-2 px-4 border-b">
-                  <button onClick={() => handleDeleteAuthor(author._id)} className="text-red-500">🗑️</button>
+                  {editingAuthorId === author._id ? (
+                    <input
+                      type="text"
+                      value={editingAuthor.firstName}
+                      onChange={(e) => setEditingAuthor({ ...editingAuthor, firstName: e.target.value })}
+                      className="border p-2"
+                    />
+                  ) : (
+                    author.firstName
+                  )}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {editingAuthorId === author._id ? (
+                    <input
+                      type="text"
+                      value={editingAuthor.lastName}
+                      onChange={(e) => setEditingAuthor({ ...editingAuthor, lastName: e.target.value })}
+                      className="border p-2"
+                    />
+                  ) : (
+                    author.lastName
+                  )}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {editingAuthorId === author._id ? (
+                    <input
+                      type="date"
+                      value={editingAuthor.birthDate}
+                      onChange={(e) => setEditingAuthor({ ...editingAuthor, birthDate: e.target.value })}
+                      className="border p-2"
+                    />
+                  ) : (
+                    author.birthDate
+                  )}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {editingAuthorId === author._id ? (
+                    <button onClick={handleUpdateAuthor} className="text-green-500 hover:text-green-700 mr-2">✅</button>
+                  ) : (
+                    <button onClick={() => handleEditAuthor(author)} className="text-blue-500 hover:text-blue-700 mr-2">✏️</button>
+                  )}
+                  <button onClick={() => handleDeleteAuthor(author._id)} className="text-red-500 hover:text-red-700">🗑️</button>
                 </td>
               </tr>
             ))

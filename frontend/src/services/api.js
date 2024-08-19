@@ -31,6 +31,11 @@ export const deleteAuthor = async (id) => {
   return await axios.delete(`${API_URL}/authors/${id}`);
 };
 
+// Update a Author by ID
+export const updateAuthor = async (id, authorData) => {
+  return await axios.put(`${API_URL}/authors/${id}`, authorData);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- categories ---------------------------//
 //------------------------- ----------- ---------------------------//
