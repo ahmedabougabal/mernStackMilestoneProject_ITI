@@ -29,5 +29,4 @@ const schema = new mongoose.Schema({
   image: { type: String },
 });
 
-export const Book = mongoose.model('Book', schema);
-;
+export const Book = mongoose.model("Book", schema);
