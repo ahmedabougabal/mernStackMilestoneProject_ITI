@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import api from '../services/api';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthorList = () => {
   const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
-    api.get('/authors')
-      .then(response => setAuthors(response.data))
-      .catch(error => console.error('Error fetching authors:', error));
+    const fetchAuthors = async () => {
+      try {
+        const response = await axios.get('http://localhost:5200/authors');
+        setAuthors(response.data);
+      } catch (error) {
+        console.error("Error fetching authors:", error);
+      }
+    };
+    fetchAuthors();
   }, []);
 
   return (
     <div>
-      <h1>Authors</h1>
+      <h2>Author List</h2>
       <ul>
-        {authors.map(author => <li key={author._id}>{author.name}</li>)}
+        {authors.map(author => (
+          <li key={author.id}>{author.name}</li>
+        ))}
       </ul>
     </div>
   );
