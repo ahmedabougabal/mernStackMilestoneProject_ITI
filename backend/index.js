@@ -10,16 +10,20 @@ import categoryRoutes from "./routes/categories.js";
 import  listRoutes  from "./routes/list.js";
 import connectDB from "./config/db.js";
 
+
 dotenv.config();
 const Port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
+app.use(cors());
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 
 // Enable CORS for all routes
 app.use(
@@ -31,7 +35,7 @@ app.use(
 );
 
 // app.use("/books", booksRoute);
-app.use("/", booksRoute); // Use the books routes
+app.use("/books", booksRoute);
 app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
 app.use("/", categoryRoutes);
 app.use("/", listRoutes);

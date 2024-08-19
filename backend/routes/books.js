@@ -1,19 +1,25 @@
 import express from "express";
+import mongoose from "mongoose";
 import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
 router.post("/addBook", async (request, response) => {
   try {
-    if (!request.body.name || !request.body.author || !request.body.category) {
+    if (
+      !request.body.name ||
+      !request.body.AuthorId ||
+      !request.body.Category ||
+      !request.body.image
+    ) {
       return response.status(400).send({
         message: "Send all required fields",
       });
     }
     const newBook = {
       name: request.body.name,
-      author: request.body.author,
-      category: request.body.category,
+      AuthorId: request.body.AuthorId,
+      Category: request.body.Category,
       image: request.body.image,
     };
 
@@ -27,7 +33,7 @@ router.post("/addBook", async (request, response) => {
 });
 
 // Route for Get All Books from database
-router.get("/books", async (request, response) => {
+router.get("/", async (request, response) => {
   try {
     const books = await Book.find({});
 
@@ -42,11 +48,19 @@ router.get("/books", async (request, response) => {
 });
 
 // Route for Get One Book from database by id
-router.get("/books/:id", async (request, response) => {
+router.get("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
+
     const book = await Book.findById(id);
+    
+    if (!book) {
+      return response.status(404).json({ message: "Book not found" });
+    }
 
     return response.status(200).json(book);
   } catch (error) {
@@ -58,13 +72,22 @@ router.get("/books/:id", async (request, response) => {
 // Route for Update a Book
 router.put("/:id", async (request, response) => {
   try {
-    if (!request.body.name || !request.body.author || !request.body.category) {
-      return response.status(400).send({
-        message: "Send all required fields",
-      });
-    }
+    // if (
+    //   !request.body.name ||
+    //   !request.body.AuthorId ||
+    //   !request.body.Category ||
+    //   !request.body.image
+    // ) {
+    //   return response.status(400).send({
+    //     message: "Send all required fields",
+    //   });
+    // }
 
     const { id } = request.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
 
     const result = await Book.findByIdAndUpdate(id, request.body);
 
@@ -84,6 +107,10 @@ router.delete("/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid book ID.' });
+    }
+
     const result = await Book.findByIdAndDelete(id);
 
     if (!result) {
@@ -96,5 +123,55 @@ router.delete("/:id", async (request, response) => {
     response.status(500).send({ message: error.message });
   }
 });
+
+
+
+
+
+router.get("/author/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    // if (!mongoose.Types.ObjectId.isValid(id)) {
+    //   return response.status(400).json({ message: 'Invalid author ID.' });
+    // }
+
+
+    const book = await Book.find({author: +id});
+
+    if (!book) {
+      return response.status(404).json({ message: "Book not found" });
+    }
+    
+    return response.status(200).json(book);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
+
+router.get("/category/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const book = await Book.find({categories: id});
+
+    return response.status(200).json(book);
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
 export default router;

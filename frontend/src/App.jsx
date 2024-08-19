@@ -4,13 +4,17 @@ import AuthorList from './components/AuthorList';
 import CategoryList from './components/CategoryList';
 import Navbar from './components/Navbar'; // Import the Navbar
 
-function App() {
 
-  useEffect(()=>{
-    axios.get('http://localhost:5200/books').then(
-      response => console.log(response)
-    )
-  },[])
+function App() {
+  // const [books, setBook] = useState({});
+  // useEffect(()=>{
+  //   axios.get('http://localhost:5200/books').then(
+  //     response => {
+  //      console.log(response.data.data)
+  //      setBook(response.data.data)
+  //     }
+  //   )
+  // },[])
 
   return (
     <div>

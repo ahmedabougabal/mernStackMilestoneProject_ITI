@@ -1,32 +1,36 @@
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
-  // ID : {
-  //     type: String,
+  // id: {
+  //   type: String,
   // },
   name: {
     type: String,
     required: true,
-
   },
-  CategoryId: {
-    type: Number,
+  Category: {
+    type: String,
+    type: mongoose.Schema.Types.ObjectId,ref: "Category",
     required: true,
-
   },
   AuthorId: {
     type: Number,
+    type: mongoose.Schema.Types.ObjectId,ref: "Author",
     required: true,
-
   },
   image: {
     type: String,
     required: true,
-
   },
-  avgRating: { type: Number, default: 0 },
-  ratingsCount: { type: Number, default: 0 },
-  image: { type: String },
+  rating: {
+    type: Number,
+  },
+  description: {
+    type: String,
+  },
+  reviews: {
+    type: Array,
+  },
 });
 
 export const Book = mongoose.model("Book", schema);

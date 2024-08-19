@@ -1,2 +1,2 @@
-PORT=
+PORT= 5200
 MONGO_URI= 
