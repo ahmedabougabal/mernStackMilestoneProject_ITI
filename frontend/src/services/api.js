@@ -36,3 +36,12 @@ export const updateCategory = async (id, categoryData) => {
 export const deleteCategory = async (id) => {
   return await axios.delete(`${API_URL}/categories/${id}`);
 };
+
+// Add a new category
+export const addAuthor = async (authorData) => {
+  return await axios.post(`${API_URL}/addAuthor`, authorData);
+};
+
+export const deleteAuthor = async (id) => {
+  return await axios.delete(`${API_URL}/authors/${id}`);
+};
