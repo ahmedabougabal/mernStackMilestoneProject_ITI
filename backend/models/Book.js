@@ -24,16 +24,10 @@ const schema = new mongoose.Schema({
     required: true,
 
   },
-  description: {
-    type: String,
-
-  },
-  reviews: {
-    type: Array
-
-  }
-
-})
+  avgRating: { type: Number, default: 0 },
+  ratingsCount: { type: Number, default: 0 },
+  image: { type: String },
+});
 
 export const Book = mongoose.model('Book', schema);
 ;
