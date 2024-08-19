@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { getBookById } from '../services/api'; // Import your API function
 
 const BookDetails = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5200/books/${id}`);
+        const response = await getBookById(id); // Use your API function
         setBook(response.data);
       } catch (error) {
-        console.error("Error fetching book details:", error);
+        setError(error.message || 'Error fetching book details');
       }
     };
     fetchBookDetails();
   }, [id]);
 
-  if (!book) return <div>Loading...</div>;
+  if (error) return <div className="p-4 text-red-500">Error: {error}</div>;
+  if (!book) return <div className="p-4">Loading...</div>;
 
   return (
-    <div>
-      <h2>{book.title}</h2>
-      <p>{book.description}</p>
-      <p>Author: {book.author.name}</p>
+    <div className="p-4">
+      <h2 className="text-3xl font-bold mb-4">{book.title}</h2>
+      <img src={book.image} alt={book.title} className="w-full h-auto mb-4" />
+      <p className="mb-4">{book.description}</p>
+      <p className="font-semibold">Author: {book.author.name}</p>
+      <p className="font-semibold">Category: {book.category.name}</p> {/* Ensure category name matches your API response */}
     </div>
   );
 };
 
 export default BookDetails;
+

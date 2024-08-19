@@ -13,3 +13,7 @@ export const getAuthors = async () => {
 export const getCategories = async () => {
   return await axios.get(`${API_URL}/categories`);
 };
+
+export const getBookById = async (id) => {
+  return await axios.get(`${API_URL}/books/${id}`);
+};
