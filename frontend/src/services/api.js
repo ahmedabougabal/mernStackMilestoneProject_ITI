@@ -1,8 +1,15 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:5200", // Your backend URL
-  withCredentials: true, // To handle cookies if needed
-});
+const API_URL = "http://localhost:5200";
 
-export default api;
+export const getBooks = async () => {
+  return await axios.get(`${API_URL}/books`);
+};
+
+export const getAuthors = async () => {
+  return await axios.get(`${API_URL}/authors`);
+};
+
+export const getCategories = async () => {
+  return await axios.get(`${API_URL}/categories`);
+};
