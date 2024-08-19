@@ -35,7 +35,7 @@ app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/a
 app.use("/", categoryRoutes);
 
 app.get("/", (req, res) => {
-    res.send("Server is running");
+  res.send("Server is running");
 });
 
 app.listen(Port, () => console.log(`server running on port: ${Port}`));
