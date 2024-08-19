@@ -7,7 +7,7 @@ function HomePage() {
     <div>
       <h1>Welcome to Goodreads Clone</h1>
       <BookList />
-      <CategoryList />
+
     </div>
   );
 }
