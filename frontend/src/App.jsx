@@ -5,6 +5,13 @@ import CategoryList from './components/CategoryList';
 import Navbar from './components/Navbar'; // Import the Navbar
 
 function App() {
+
+  useEffect(()=>{
+    axios.get('http://localhost:5200/books').then(
+      response => console.log(response)
+    )
+  },[])
+
   return (
     <div>
       <Navbar /> {/* Include the Navbar */}
