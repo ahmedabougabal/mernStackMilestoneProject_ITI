@@ -7,10 +7,11 @@ import cors from "cors"; // Import CORS to solve the problem between front and b
 import booksRoute from "./routes/books.js";
 import authorRoutes from "./routes/authors.js";
 import categoryRoutes from "./routes/categories.js";
+import  listRoutes  from "./routes/list.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
-const Port = process.env.PORT || 5200;
+const Port = process.env.PORT || 5000;
 
 connectDB();
 
@@ -33,6 +34,7 @@ app.use(
 app.use("/", booksRoute); // Use the books routes
 app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
 app.use("/", categoryRoutes);
+app.use("/", listRoutes);
 
 app.get("/", (req, res) => {
     res.send("Server is running");
