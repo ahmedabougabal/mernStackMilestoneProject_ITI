@@ -1,13 +1,15 @@
-import Header from './books/Header';
+import React from 'react';
+import BookList from '../components/BookList';
+import CategoryList from '../components/CategoryList';
 
-function Home() {
-    return (
-      <>
-      <Header/>
-        <h1>this is The Home Page :)</h1>
-      </>
-    )
-  }
-  
-  export default Home
-  
+const HomePage = () => {
+  return (
+    <div>
+      <h1>Welcome to Goodreads</h1>
+      <BookList />
+      <CategoryList />
+    </div>
+  );
+};
+
+export default HomePage;
