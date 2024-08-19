@@ -23,6 +23,8 @@ const schema = new mongoose.Schema({
         required: true,  // Makes the field required
         default: 'want to read',  // Optional: set a default value
     },
+      timestamps: true,
+
   });
   
   export const Book = mongoose.model("listRead", schema);
