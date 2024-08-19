@@ -72,16 +72,16 @@ router.get("/:id", async (request, response) => {
 // Route for Update a Book
 router.put("/:id", async (request, response) => {
   try {
-    if (
-      !request.body.name ||
-      !request.body.AuthorId ||
-      !request.body.Category ||
-      !request.body.image
-    ) {
-      return response.status(400).send({
-        message: "Send all required fields",
-      });
-    }
+    // if (
+    //   !request.body.name ||
+    //   !request.body.AuthorId ||
+    //   !request.body.Category ||
+    //   !request.body.image
+    // ) {
+    //   return response.status(400).send({
+    //     message: "Send all required fields",
+    //   });
+    // }
 
     const { id } = request.params;
 

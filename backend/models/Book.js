@@ -22,6 +22,9 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  rating: {
+    type: Number,
+  },
   description: {
     type: String,
   },
@@ -30,4 +33,5 @@ const schema = new mongoose.Schema({
   },
 });
 
-export const Book = mongoose.model("Book", schema);
+export const Book = mongoose.model('Book', schema);
+;
