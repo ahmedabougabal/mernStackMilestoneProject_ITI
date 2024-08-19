@@ -7,11 +7,11 @@ import cors from "cors"; // Import CORS to solve the problem between front and b
 import booksRoute from "./routes/books.js";
 import authorRoutes from "./routes/authors.js";
 import categoryRoutes from "./routes/categories.js";
-import  listRoutes  from "./routes/list.js";
+import listRoutes from "./routes/list.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
-const Port = process.env.PORT || 5000;
+const Port = process.env.PORT || 5200;
 
 connectDB();
 
