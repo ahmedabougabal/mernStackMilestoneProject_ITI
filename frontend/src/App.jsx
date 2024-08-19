@@ -1,22 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-// import LoginPage from './pages/LoginPage';
-// import RegisterPage from './pages/RegisterPage';
-import BookDetails from './components/BookDetails';
-import AuthorDetails from './components/AuthorDetails';
+import AuthorList from './components/AuthorList';
+import CategoryList from './components/CategoryList';
+import Navbar from './components/Navbar'; // Import the Navbar
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} /> */}
-        <Route path="/book/:id" element={<BookDetails />} />
-        <Route path="/author/:id" element={<AuthorDetails />} />
-      </Routes>
-    </Router>
+    <div>
+      <Navbar /> {/* Include the Navbar */}
+      <main className="p-4">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/authors" element={<AuthorList />} />
+          <Route path="/categories" element={<CategoryList />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
