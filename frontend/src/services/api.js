@@ -64,3 +64,8 @@ export const deleteCategory = async (id) => {
 export const updateCategory = async (id, categoryData) => {
   return await axios.put(`${API_URL}/categories/${id}`, categoryData);
 };
+
+// Fetch books by category ID
+export const getBooksByCategory = async (categoryId) => {
+  return await axios.get(`${API_URL}/books/category/${categoryId}`);
+};

@@ -1,19 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import axios from 'axios';
+
 import HomePage from './pages/HomePage';
 import AuthorList from './components/AuthorList';
 import AuthorDetails from './components/AuthorDetails';
 import CategoryList from './components/CategoryList';
+import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
-import Navbar from './components/Navbar'; // Import the Navbar
+import Navbar from './components/Navbar'; 
+
 import './index.css';
 import 'tailwindcss/tailwind.css';
+
+
+///////////----------------------------
 
 function App() {  
 
   
-
   return (
     <div>
       <Navbar /> {/* Include the Navbar */}
@@ -24,6 +29,7 @@ function App() {
           <Route path="/authors/:id" element={<AuthorDetails />} />
           <Route path="/books" element={<BookList />} />
           <Route path="/categories" element={<CategoryList />} />
+          <Route path="/categories/:id" element={<CategoryDetails />} /> 
         </Routes>
       </main>
     </div>
