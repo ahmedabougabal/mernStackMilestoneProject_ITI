@@ -7,12 +7,13 @@ import cors from "cors"; // Import CORS to solve the problem between front and b
 import booksRoute from "./routes/books.js";
 import authorRoutes from "./routes/authors.js";
 import categoryRoutes from "./routes/categories.js";
-import  listRoutes  from "./routes/list.js";
+import listRoutes from "./routes/list.js";
 import connectDB from "./config/db.js";
-
+import userRoutes from "./routes/userRoutes.js"
 
 dotenv.config();
-const Port = process.env.PORT || 5000;
+const Port = process.env.PORT || 5200;
+console.log("MONGO_URI:", process.env.MONGO_URI); // just for Debugging
 
 connectDB();
 
@@ -28,15 +29,16 @@ app.use(cookieParser());
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow the frontend origin
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
-    credentials: true, // Allow cookies if needed
+    origin: "http://localhost:5173", 
+    methods: ["GET", "POST", "PUT", "DELETE"], 
+    credentials: true, 
   })
 );
+app.use("/api/users", userRoutes);
 
 // app.use("/books", booksRoute);
 app.use("/books", booksRoute);
-app.use("/", authorRoutes); // This prefixes all routes in `authors.js` with `/api`
+app.use("/", authorRoutes); 
 app.use("/", categoryRoutes);
 app.use("/", listRoutes);
 

@@ -4,7 +4,7 @@ import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
-router.post("/addBook", async (request, response) => {
+router.post("/", async (request, response) => {
   try {
     if (
       !request.body.name ||
@@ -132,12 +132,13 @@ router.get("/author/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //   return response.status(400).json({ message: 'Invalid author ID.' });
-    // }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid author ID.' });
+    }
 
 
-    const book = await Book.find({author: +id});
+    const book = await Book.find({AuthorId: id});
+    console.log(book);
 
     if (!book) {
       return response.status(404).json({ message: "Book not found" });

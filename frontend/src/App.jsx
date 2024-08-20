@@ -1,24 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import HomePage from './pages/HomePage';
-import BookList from './components/BookList.jsx';
-import AuthorList from './components/AuthorList.jsx';
-import CategoryList from './components/CategoryList.jsx';
+import AuthorList from './components/AuthorList';
+import CategoryList from './components/CategoryList';
+import BookList from './components/BookList';
+import BookDetails from './components/BookDetails.jsx';
 import Navbar from './components/Navbar'; // Import the Navbar
+import './index.css';
+import 'tailwindcss/tailwind.css';
 
+function App() {  
 
-function App() {
-
-
-  // const [books, setBook] = useState({});
-  // useEffect(()=>{
-  //   axios.get('http://localhost:5200/books').then(
-  //     response => {
-  //      console.log(response.data.data)
-  //      setBook(response.data.data)
-  //     }
-  //   )
-  // },[])
-
+  
 
   return (
     <div>
@@ -28,6 +22,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/authors" element={<AuthorList />} />
           <Route path="/books" element={<BookList />} />
+          <Route path='/books/details/:id' element={<BookDetails />} />
           <Route path="/categories" element={<CategoryList />} />
         </Routes>
       </main>
