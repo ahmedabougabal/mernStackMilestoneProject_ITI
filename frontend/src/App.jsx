@@ -6,7 +6,8 @@ import AuthorList from './components/AuthorList';
 import CategoryList from './components/CategoryList';
 import BookList from './components/BookList';
 import Navbar from './components/Navbar'; // Import the Navbar
-
+import './index.css'
+import 'tailwindcss/tailwind.css';
 
 function App() {  
 
