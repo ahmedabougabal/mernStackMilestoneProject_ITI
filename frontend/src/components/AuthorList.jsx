@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuthors, addAuthor, deleteAuthor, updateAuthor } from '../services/api'; // Assuming updateAuthor function exists
 
-const AuthorManagement = () => {
+const AuthorList = () => {
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState({ firstName: '', lastName: '', birthDate: '' });
   const [editingAuthorId, setEditingAuthorId] = useState(null); // State for editing mode
@@ -65,12 +65,12 @@ const AuthorManagement = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Author Management</h2>
+    <div className="p-8">
+      <h2 className="text-3xl font-bold mb-8 text-center">Author Management</h2>
 
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      <div className="mb-4">
+      <div className="mb-8 text-center">
         <input
           type="text"
           placeholder="First Name"
@@ -91,25 +91,25 @@ const AuthorManagement = () => {
           onChange={(e) => setNewAuthor({ ...newAuthor, birthDate: e.target.value })}
           className="border p-2 mr-2"
         />
-        <button onClick={handleAddAuthor} className="bg-blue-500 text-white px-4 py-2">Add Author</button>
+        <button onClick={handleAddAuthor} className="bg-blue-500 text-white px-4 py-2 rounded">Add Author</button>
       </div>
 
-      <table className="min-w-full bg-white">
+      <table className="w-3/4 mx-auto bg-white text-lg ">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">ID</th>
-            <th className="py-2 px-4 border-b">First Name</th>
-            <th className="py-2 px-4 border-b">Last Name</th>
-            <th className="py-2 px-4 border-b">Date of Birth</th>
-            <th className="py-2 px-4 border-b">Actions</th>
+            <th className="py-4 px-6 border-b">ID</th>
+            <th className="py-4 px-6 border-b">First Name</th>
+            <th className="py-4 px-6 border-b">Last Name</th>
+            <th className="py-4 px-6 border-b">Date of Birth</th>
+            <th className="py-4 px-6 border-b">Actions</th>
           </tr>
         </thead>
         <tbody>
           {authors.length > 0 ? (
             authors.map((author) => (
               <tr key={author._id}>
-                <td className="py-2 px-4 border-b">{author._id}</td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-4 px-6 border-b">{author._id}</td>
+                <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <input
                       type="text"
@@ -121,7 +121,7 @@ const AuthorManagement = () => {
                     author.firstName
                   )}
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <input
                       type="text"
@@ -133,7 +133,7 @@ const AuthorManagement = () => {
                     author.lastName
                   )}
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <input
                       type="date"
@@ -142,10 +142,10 @@ const AuthorManagement = () => {
                       className="border p-2"
                     />
                   ) : (
-                    author.birthDate
+                    new Date(author.birthDate).toLocaleDateString('en-CA')
                   )}
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <button onClick={handleUpdateAuthor} className="text-green-500 hover:text-green-700 mr-2">✅</button>
                   ) : (
@@ -157,7 +157,7 @@ const AuthorManagement = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="5" className="py-2 px-4 text-center">No authors found</td>
+              <td colSpan="5" className="py-4 px-6 text-center">No authors found</td>
             </tr>
           )}
         </tbody>
@@ -166,4 +166,4 @@ const AuthorManagement = () => {
   );
 };
 
-export default AuthorManagement;
+export default AuthorList;

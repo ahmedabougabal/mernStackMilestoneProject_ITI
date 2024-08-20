@@ -4,22 +4,14 @@ import axios from 'axios';
 import HomePage from './pages/HomePage';
 import AuthorList from './components/AuthorList';
 import CategoryList from './components/CategoryList';
+import BookList from './components/BookList';
 import Navbar from './components/Navbar'; // Import the Navbar
+import './index.css'
+import 'tailwindcss/tailwind.css';
 
-
-function App() {
+function App() {  
 
   
-  // const [books, setBook] = useState({});
-  // useEffect(()=>{
-  //   axios.get('http://localhost:5200/books').then(
-  //     response => {
-  //      console.log(response.data.data)
-  //      setBook(response.data.data)
-  //     }
-  //   )
-  // },[])
-
 
   return (
     <div>

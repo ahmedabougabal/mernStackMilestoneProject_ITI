@@ -1,6 +1,6 @@
 import React from 'react';
 import BookList from '../components/BookList';
-import CategoryList from '../components/CategoryList';
+
 
 function HomePage() {
   return (
