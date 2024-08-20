@@ -7,7 +7,7 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error("better fill all the credentials? ");
   }
   const userExists = await User.findOne({ email })
-  if (userExists) res.status(400).send("user a;ready exists");
+  if (userExists) res.status(400).send("user already exists");
 
   const newUser = new User({ username, email, password })
 
