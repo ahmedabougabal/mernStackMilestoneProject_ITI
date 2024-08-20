@@ -36,6 +36,11 @@ export const updateAuthor = async (id, authorData) => {
   return await axios.put(`${API_URL}/authors/${id}`, authorData);
 };
 
+// Fetch books by author ID
+export const getBooksByAuthor = async (authorId) => {
+  return await axios.get(`${API_URL}/books/author/${authorId}`);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- categories ---------------------------//
 //------------------------- ----------- ---------------------------//

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import HomePage from './pages/HomePage';
 import AuthorList from './components/AuthorList';
+import AuthorDetails from './components/AuthorDetails';
 import CategoryList from './components/CategoryList';
 import BookList from './components/BookList';
 import Navbar from './components/Navbar'; // Import the Navbar
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/authors" element={<AuthorList />} />
+          <Route path="/authors/:id" element={<AuthorDetails />} />
           <Route path="/books" element={<BookList />} />
           <Route path="/categories" element={<CategoryList />} />
         </Routes>
