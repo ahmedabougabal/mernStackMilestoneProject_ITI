@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5200";
+const API_URL = "http://localhost:5000";
 
 // Fetch all books
 export const getBooks = async () => {
@@ -58,4 +58,15 @@ export const deleteCategory = async (id) => {
 // Update a category by ID
 export const updateCategory = async (id, categoryData) => {
   return await axios.put(`${API_URL}/categories/${id}`, categoryData);
+};
+
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- lsit ---------------------------//
+//------------------------- ----------- ---------------------------//
+
+
+// Fetch a single list user by user ID
+export const getUserList = async (id) => {
+  return await axios.get(`${API_URL}/getUserList/${id}`);
 };

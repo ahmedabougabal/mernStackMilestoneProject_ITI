@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
+import { getUserList } from '../services/api'; // Assuming updateAuthor function exists
 import BookList from '../components/BookList';
+
 const initialBooksData = [
   { id: 1, cover: '📘', name: 'Oliver Twist', author: 'Dickens', avgRate: 3, rating: 4, shelf: 'read' },
   { id: 2, cover: '📘', name: 'Still Lives', author: 'Maria H.', avgRate: 2, rating: 5, shelf: 'reading' },
@@ -10,6 +12,22 @@ function HomePage() {
   const [books, setBooks] = useState(initialBooksData);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  const IdUser = localStorage.getItem("IdUser")
+
+  useEffect(() => {
+    const fetchlistuser = async () => {
+      try {
+        const response = await getUserList(IdUser); // Use your API function
+        console.log(response.data[0].items)
+        
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
+    fetchlistuser();
+  }, [IdUser]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -117,6 +135,8 @@ function HomePage() {
 
     </div>
   );
+
+
 }
 
 export default HomePage;
