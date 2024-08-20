@@ -121,7 +121,13 @@ const AuthorList = () => {
                     author.firstName
                   )}
                 </td>
-                <td className="py-4 px-6 border-b">
+                <td className="py-4 px-6 border-b">editingAuthorId === author._id ? (
+                    <input
+                      type="text"
+                      value={editingAuthor.firstName}
+                      onChange={(e) => setEditingAuthor({ ...editingAuthor, firstName: e.target.value })}
+                      className="border p-2"
+                    />
                   {editingAuthorId === author._id ? (
                     <input
                       type="text"
