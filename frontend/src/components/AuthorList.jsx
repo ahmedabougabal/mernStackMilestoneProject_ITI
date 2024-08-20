@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getAuthors, addAuthor, deleteAuthor, updateAuthor } from '../services/api'; // Assuming updateAuthor function exists
+import { getAuthors, addAuthor, deleteAuthor, updateAuthor } from '../services/api';
+import { Link } from 'react-router-dom';
 
 const AuthorList = () => {
   const [authors, setAuthors] = useState([]);
   const [newAuthor, setNewAuthor] = useState({ firstName: '', lastName: '', birthDate: '' });
-  const [editingAuthorId, setEditingAuthorId] = useState(null); // State for editing mode
-  const [editingAuthor, setEditingAuthor] = useState({ firstName: '', lastName: '', birthDate: '' }); // State for editing author data
+  const [editingAuthorId, setEditingAuthorId] = useState(null);
+  const [editingAuthor, setEditingAuthor] = useState({ firstName: '', lastName: '', birthDate: '' });
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -17,7 +18,6 @@ const AuthorList = () => {
         setError(error.message || 'Error fetching authors');
       }
     };
-
     fetchAuthors();
   }, []);
 
@@ -41,8 +41,8 @@ const AuthorList = () => {
   };
 
   const handleEditAuthor = (author) => {
-    setEditingAuthorId(author._id); // Set the author ID being edited
-    setEditingAuthor({ firstName: author.firstName, lastName: author.lastName, birthDate: author.birthDate }); // Pre-fill the input fields with the author's current data
+    setEditingAuthorId(author._id);
+    setEditingAuthor({ firstName: author.firstName, lastName: author.lastName, birthDate: author.birthDate });
   };
 
   const handleUpdateAuthor = async () => {
@@ -54,8 +54,8 @@ const AuthorList = () => {
             author._id === editingAuthorId ? { ...author, ...editingAuthor } : author
           )
         );
-        setEditingAuthorId(null); // Exit editing mode
-        setEditingAuthor({ firstName: '', lastName: '', birthDate: '' }); // Clear input fields
+        setEditingAuthorId(null);
+        setEditingAuthor({ firstName: '', lastName: '', birthDate: '' });
       } catch (error) {
         setError(error.message || 'Error updating author');
       }
@@ -94,7 +94,7 @@ const AuthorList = () => {
         <button onClick={handleAddAuthor} className="bg-blue-500 text-white px-4 py-2 rounded">Add Author</button>
       </div>
 
-      <table className="w-3/4 mx-auto bg-white text-lg ">
+      <table className="w-3/4 mx-auto bg-white text-lg">
         <thead>
           <tr>
             <th className="py-4 px-6 border-b">ID</th>
@@ -108,7 +108,11 @@ const AuthorList = () => {
           {authors.length > 0 ? (
             authors.map((author) => (
               <tr key={author._id}>
-                <td className="py-4 px-6 border-b">{author._id}</td>
+                <td className="py-4 px-6 border-b">
+                  <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
+                    {author._id}
+                  </Link>
+                </td>
                 <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <input
@@ -118,7 +122,9 @@ const AuthorList = () => {
                       className="border p-2"
                     />
                   ) : (
-                    author.firstName
+                    <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
+                      {author.firstName}
+                    </Link>
                   )}
                 </td>
                 <td className="py-4 px-6 border-b">
@@ -130,7 +136,9 @@ const AuthorList = () => {
                       className="border p-2"
                     />
                   ) : (
-                    author.lastName
+                    <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
+                      {author.lastName}
+                    </Link>
                   )}
                 </td>
                 <td className="py-4 px-6 border-b">
@@ -142,7 +150,9 @@ const AuthorList = () => {
                       className="border p-2"
                     />
                   ) : (
-                    new Date(author.birthDate).toLocaleDateString('en-CA')
+                    <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
+                      {new Date(author.birthDate).toLocaleDateString('en-CA')}
+                    </Link>
                   )}
                 </td>
                 <td className="py-4 px-6 border-b">

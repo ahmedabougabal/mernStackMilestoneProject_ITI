@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getBookById } from '../services/api'; // Import your API function
+import { getBookById } from '../services/api'; 
 
 const BookDetails = () => {
   const { id } = useParams();
@@ -10,7 +10,7 @@ const BookDetails = () => {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await getBookById(id); // Use your API function
+        const response = await getBookById(id); // to get books by authour
         setBook(response.data);
       } catch (error) {
         setError(error.message || 'Error fetching book details');
