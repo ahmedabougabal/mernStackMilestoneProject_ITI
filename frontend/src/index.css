@@ -78,6 +78,7 @@ margin: 2%;
 }
 
 .single-book-img{
-  width: 90%;
-  height: 250px;
+  justify-content: center;
+  width: 50%;
+  height: 200px;
 }

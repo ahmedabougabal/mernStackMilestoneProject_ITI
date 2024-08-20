@@ -1,13 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import AuthorList from './components/AuthorList';
-import CategoryList from './components/CategoryList';
+import BookList from './components/BookList.jsx';
+import AuthorList from './components/AuthorList.jsx';
+import CategoryList from './components/CategoryList.jsx';
 import Navbar from './components/Navbar'; // Import the Navbar
 
 
 function App() {
 
-  
+
   // const [books, setBook] = useState({});
   // useEffect(()=>{
   //   axios.get('http://localhost:5200/books').then(
