@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", async (request, response) => {
   try {
     if (
-      !request.body.name ||
+      !request.body.title ||
       !request.body.AuthorId ||
       !request.body.Category ||
       !request.body.image
@@ -17,7 +17,7 @@ router.post("/", async (request, response) => {
       });
     }
     const newBook = {
-      name: request.body.name,
+      title: request.body.title,
       AuthorId: request.body.AuthorId,
       Category: request.body.Category,
       image: request.body.image,
@@ -73,7 +73,7 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     // if (
-    //   !request.body.name ||
+    //   !request.body.title ||
     //   !request.body.AuthorId ||
     //   !request.body.Category ||
     //   !request.body.image
@@ -128,9 +128,9 @@ router.delete("/:id", async (request, response) => {
 /////////------------------------------------------
 /////////------------------------------------------
 
-router.get("/author/:id", async (req, res) => {
+router.get("/author/:id", async (request, response) => {
   try {
-    const authorId = req.params.id;
+    const authorId = request.params.id;
 
     // Validate ObjectId
     if (!mongoose.Types.ObjectId.isValid(authorId)) {
@@ -141,17 +141,15 @@ router.get("/author/:id", async (req, res) => {
     const books = await Book.find({ AuthorId: authorId });
 
     if (books.length === 0) {
-      return res
+      return response
         .status(404)
         .json({ message: "No books found for this author." });
     }
 
-    res.json(books);
+    return response.status(200).json(books);
   } catch (error) {
     console.error("Error fetching books by author:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while fetching books." });
+    response.status(500).send({ message: error.message });
   }
 });
 
@@ -179,7 +177,7 @@ router.get("/category/:id", async (request, response) => {
     return response.status(200).json(books);
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    response.status(500).send({ responsemessage: error.message });
   }
 });
 export default router;

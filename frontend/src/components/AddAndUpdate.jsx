@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { PiBookOpenTextLight } from 'react-icons/pi';
 import { BiUserCircle } from 'react-icons/bi';
-import { getAuthors,getCategories,addBook} from '../services/api';
+import { getAuthors,getCategories,addBook,updateBook} from '../services/api';
 import Spinner from './Spinner.jsx';
 
 
 
-const AddAndUpdate = ({ book, onClose }) => {
+const AddAndUpdate = ({ book, onClose, type }) => {
 
     const [inputs, setInputs] = useState({});
     const [authors, setAuthors] = useState([]);
@@ -16,7 +16,7 @@ const AddAndUpdate = ({ book, onClose }) => {
     const [error, setError] = useState(null);
 
 
-
+console.log(book.title)
   
   
     useEffect(() => {
@@ -25,10 +25,10 @@ const AddAndUpdate = ({ book, onClose }) => {
             setLoading(true);
             const response = await getAuthors();
             setAuthors(response.data.data);
+            setLoading(false);
           } catch (error) {
             setError(error.message || 'Error fetching authors');
           }
-          setLoading(false);
         };
         fetchAuthors();
       }, []);
@@ -40,13 +40,14 @@ const AddAndUpdate = ({ book, onClose }) => {
           const response = await getCategories();
           if (Array.isArray(response.data.data)) {
             setCategories(response.data.data);
+            setLoading(false);
           } else {
             throw new Error('Categories data is not an array');
           }
         } catch (err) {
           setError(err.message || 'Error fetching categories');
         }
-        setLoading(false);
+        // setLoading(false);
     };
       fetchCategories();
     }, []);
@@ -64,11 +65,15 @@ const AddAndUpdate = ({ book, onClose }) => {
         event.preventDefault();
 
         try{
+       if(type=="add"){
         const response = await addBook(inputs);
-        onClose()
+       }else{
+       const response = await updateBook(book._id,inputs);
+       }
+       onClose()
     }catch (error) {
         console.log(error)
-        setError(error.response.data.message || 'Error Adding Book');
+        setError(error.response.data.message || (type=="add"?'Error Adding Book' : 'Error Updating Book' ));
       }
     }
 
@@ -85,7 +90,9 @@ const AddAndUpdate = ({ book, onClose }) => {
                     className='absolute right-6 top-6 text-3xl text-red-600 cursor-pointer'
                     onClick={onClose}
                 />
-                <h2 className='my-2 text-gray-500 text-2xl'>New Book</h2>
+                {type=="add" ?
+                (<h2 className='my-2 text-gray-500 text-2xl'>New Book</h2>)
+                :(<h2 className='my-2 text-gray-500 text-2xl'>Update Book</h2>)}
                 <br />
                 {loading ? (
    <Spinner />) :(
@@ -94,8 +101,8 @@ const AddAndUpdate = ({ book, onClose }) => {
                     <label className="py-4 px-6 border-b">Enter Book Title:</label>
                         <input
                             type="text"
-                            name="name"
-                            value={inputs.name || ""}
+                            name="title"
+                            value={inputs.title || ""}
                             onChange={handleChange}
                             className="border p-2 w-1/2"
                         />
@@ -130,7 +137,9 @@ const AddAndUpdate = ({ book, onClose }) => {
                         />
                      </div>
                     <br />
-                    <input value="Add book" type="submit" />
+                    {type=="add" ?
+                    (<input value="Add book" type="submit" />)
+                    :(<input value="update" type="submit" />)}
                 </form>
    )}
    <div  className="absolute justify-self-center bottom-4 text-3l text-red-600"> {error}</div>

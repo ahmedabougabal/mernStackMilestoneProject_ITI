@@ -24,6 +24,11 @@ export const addBook = async (bookData) => {
   return await axios.post(`${API_URL}/books`, bookData);
 };
 
+// Update a book
+export const updateBook = async (id, bookData) => {
+  return await axios.put(`${API_URL}/books/${id}`, bookData);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- authors ---------------------------//
 //------------------------- ----------- ---------------------------//
