@@ -8,8 +8,8 @@ import AuthorDetails from './components/AuthorDetails';
 import CategoryList from './components/CategoryList';
 import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
-import Navbar from './components/Navbar'; 
-
+import BookDetails from './components/BookDetails.jsx';
+import Navbar from './components/Navbar'; // Import the Navbar
 import './index.css';
 import 'tailwindcss/tailwind.css';
 
@@ -28,6 +28,7 @@ function App() {
           <Route path="/authors" element={<AuthorList />} />
           <Route path="/authors/:id" element={<AuthorDetails />} />
           <Route path="/books" element={<BookList />} />
+          <Route path='/books/details/:id' element={<BookDetails />} />
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/categories/:id" element={<CategoryDetails />} /> 
         </Routes>

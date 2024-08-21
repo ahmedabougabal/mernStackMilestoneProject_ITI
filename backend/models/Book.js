@@ -9,15 +9,12 @@ const schema = new mongoose.Schema({
     required: true,
   },
   Category: {
-    // type: mongoose.Schema.Types.ObjectId,
-    type: String,
-    ref: "Category",
+    type: mongoose.Schema.Types.ObjectId,ref: "Category",
     required: true,
   },
   AuthorId: {
-    // type: mongoose.Schema.Types.ObjectId,
     type: String,
-    ref: "Author",
+    type: mongoose.Schema.Types.ObjectId,ref: "Author",
     required: true,
   },
   image: {

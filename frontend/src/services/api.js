@@ -2,6 +2,13 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5200";
 
+
+
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- books ---------------------------//
+//------------------------- ----------- ---------------------------//
+
 // Fetch all books
 export const getBooks = async () => {
   return await axios.get(`${API_URL}/books`);
@@ -10,6 +17,11 @@ export const getBooks = async () => {
 // Fetch a single book by ID
 export const getBookById = async (id) => {
   return await axios.get(`${API_URL}/books/${id}`);
+};
+
+// Add a new book
+export const addBook = async (bookData) => {
+  return await axios.post(`${API_URL}/books`, bookData);
 };
 
 //------------------------- ----------- ---------------------------//
