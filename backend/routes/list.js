@@ -128,6 +128,27 @@ router.post("/addToRead", async (request, response) => {
     }
 });
 
-
+router.patch('/listRead/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId; // Get user ID from URL parameters
+        const updatedItems = req.body; // Get the updated list of books from the request body
+    
+        // Find the user's list by user ID and update the items
+        const updatedList = await listRead.findOneAndUpdate(
+          { user: userId }, // Find the document with the specific user ID
+          { $set: { items: updatedItems } }, // Update the items field with the new list
+          { new: true, useFindAndModify: false } // Return the updated document
+        );
+    
+        if (!updatedList) {
+          return res.status(404).json({ message: 'List not found for this user' });
+        }
+    
+        res.json(updatedList); // Send the updated list back to the client
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+      }
+  });
   
 export default router;

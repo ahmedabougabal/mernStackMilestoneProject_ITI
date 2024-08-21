@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookList from '../components/BookList';
-import { getUserList } from '../services/api'; // Import your API function
+import { getUserList, updateUserList } from '../services/api'; // Import your API function
 
 const initialBooksData = [];
 
@@ -40,15 +40,30 @@ function HomePage() {
     fetchlistuser();
   }, [IdUser]);
 
+  useEffect(() => {
+    if (books !== initialBooksData) {
+      const updateBooks = async () => {
+        try {
+          const response = await updateUserList(IdUser, books);
+          console.log('Updated Books in DB:', response.data);
+        } catch (error) {
+          console.error('Error updating books:', error);
+        }
+      };
+      updateBooks();
+    }
+  }, [books]);
+  
   const handleShelfChange = (id, newShelf) => {
     const updatedBooks = books.map((book) => {
       if (book._id === id) { // Use the unique `_id` field to identify the specific book
+        console.log(book._id)
         return { ...book, status: newShelf };
       }
       return book;
     });
     setBooks(updatedBooks);
-    console.log('Updated Books:', updatedBooks);
+    console.log('Updated Books:', updatedBooks );
   };
 
   const filteredBooks = books.filter((book) => {
