@@ -18,6 +18,8 @@ function BookList() {
   const [loading, setLoading] = useState(false);
   const [changed, setChanged] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+
 
 
   useEffect(() => {
@@ -50,11 +52,18 @@ function BookList() {
 
 
 
-if(loading){
-  return <Spinner />;
-}
+// if(loading){
+//   return <Spinner />;
+// }
 
   return (
+    <>
+    <div className='flex justify-between items-center'>
+    <h1 className='text-3xl my-8'>Books List</h1>
+      <MdOutlineAddBox onClick={() => setShowModal(true)} className='text-sky-800 text-4xl' />
+  </div>
+  {loading ? (
+   <Spinner />) :(
     <table className='w-full border-separate border-spacing-2'>
     <thead>
       <tr>
@@ -104,15 +113,15 @@ if(loading){
                 <MdOutlineDelete onClick={()  => deleted(book._id)} className='text-2xl text-red-600' />
             </div>
             {showModal && (
-        <AddAndUpdate book={book} onClose={() => setShowModal(false)} />
+        <AddAndUpdate book={book} onClose={() =>{ setShowModal(false);setChanged((state)=> !state)} }/>
       )}
           </td>
         </tr>
       ))}
     </tbody>
   </table>
-
-
+        )}
+  </>
 
 
     // <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
