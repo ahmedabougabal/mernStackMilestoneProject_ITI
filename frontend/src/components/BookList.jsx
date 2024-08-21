@@ -7,7 +7,7 @@ import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import Spinner from './Spinner.jsx';
 import AddAndUpdate from './AddAndUpdate';
 import BookDetails from './BookDetails.jsx';
-import { getBooks } from '../services/api'; 
+import { getBooks , getAuthors } from '../services/api'; 
 
 // Placeholder image URL (replace with your own placeholder image)
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
@@ -19,6 +19,10 @@ function BookList() {
   const [changed, setChanged] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
+  const [authors, setAuthors] = useState([]);
+  const [authorname, setAuthorname] = useState([]);
+
+
 
 
 
@@ -51,10 +55,34 @@ function BookList() {
     }
 
 
+    useEffect(() => {
+      const fetchAuthors = async () => {
+        try {
+          setLoading(true);
+          const response = await getAuthors();
+          setAuthors(response.data.data);
+          // console.log(authors)
+        } catch (error) {
+          setError(error.message || 'Error fetching authors');
+        }
+        setLoading(false);
+      };
+      fetchAuthors();
+    }, []);
 
-// if(loading){
-//   return <Spinner />;
-// }
+
+    // function author_name(authid){
+    //   authors.forEach(auth => {
+    //     if(auth._id == authid){
+    //       // console.log(auth.firstName + " " + auth.lastName)
+    //       return auth.firstName + " " + auth.lastName;
+    //     }
+    //   });
+    //   }
+
+
+
+
 
   return (
     <>
@@ -95,13 +123,13 @@ function BookList() {
             {book.title}
           </td>
           <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-            {/* {book.Category} */}
-            {book.categories}
+            {book.Category}
 
           </td>
           <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
+            {/* {author_name(book.AuthorId)} */}
             {book.AuthorId}
-            {/* {book.author} */}
+
 
           </td>
           <td className='border border-slate-700 rounded-md text-center'>

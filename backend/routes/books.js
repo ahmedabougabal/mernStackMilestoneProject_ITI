@@ -128,9 +128,9 @@ router.delete("/:id", async (request, response) => {
 /////////------------------------------------------
 /////////------------------------------------------
 
-router.get("/author/:id", async (req, res) => {
+router.get("/author/:id", async (request, response) => {
   try {
-    const authorId = req.params.id;
+    const id = request.params.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return response.status(400).json({ message: 'Invalid author ID.' });
@@ -138,18 +138,15 @@ router.get("/author/:id", async (req, res) => {
 
 
     const book = await Book.find({AuthorId: id});
-    console.log(book);
 
     if (!book) {
       return response.status(404).json({ message: "Book not found" });
     }
-    
+
     return response.status(200).json(book);
   } catch (error) {
     console.error("Error fetching books by author:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while fetching books." });
+    response.status(500).send({ message: error.message });
   }
 });
 
@@ -160,12 +157,16 @@ router.get("/category/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const book = await Book.find({ categories: id });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid Category ID.' });
+    }
+
+    const book = await Book.find({ Category: id });
 
     return response.status(200).json(book);
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    response.status(500).send({ responsemessage: error.message });
   }
 });
 

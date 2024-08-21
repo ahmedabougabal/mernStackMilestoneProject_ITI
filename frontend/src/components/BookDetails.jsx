@@ -46,7 +46,7 @@ const BookDetails = () => {
           </div>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Category</span>
-            <span>{book.categories}</span>
+            <span>{book.Category}</span>
           </div>
         </div>
       )}
