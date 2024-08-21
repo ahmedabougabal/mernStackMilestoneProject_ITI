@@ -136,11 +136,32 @@ router.delete("/authors/:id", async (request, response) => {
 
 // Get all books by a specific author
 router.get("/:authorId/books", async (req, res) => {
-  const { authorId } = req.params;
-  const books = await Book.find({ author: authorId }).populate(
-    "category author"
-  );
-  res.json(books);
+  try {
+    const { authorId } = req.params;
+
+    // Validate the provided authorId
+    if (!mongoose.Types.ObjectId.isValid(authorId)) {
+      return res.status(400).json({ message: "Invalid author ID." });
+    }
+
+    // Find books that match the given authorId
+    const books = await Book.find({ AuthorId: authorId });
+
+    // If no books are found, return a 404 status
+    if (books.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No books found for this author." });
+    }
+
+    // Return the found books as JSON
+    res.json(books);
+  } catch (error) {
+    console.error("Error fetching books by author:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching books." });
+  }
 });
 
 export default router;

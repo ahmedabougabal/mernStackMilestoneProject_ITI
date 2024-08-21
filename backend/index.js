@@ -11,6 +11,7 @@ import listRoutes from "./routes/list.js";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js"
 
+
 dotenv.config();
 const Port = process.env.PORT || 5200;
 console.log("MONGO_URI:", process.env.MONGO_URI); // just for Debugging
@@ -20,11 +21,9 @@ connectDB();
 const app = express();
 app.use(cors());
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 
 // Enable CORS for all routes
 app.use(

@@ -48,6 +48,11 @@ export const updateAuthor = async (id, authorData) => {
   return await axios.put(`${API_URL}/authors/${id}`, authorData);
 };
 
+// Fetch books by author ID
+export const getBooksByAuthor = async (authorId) => {
+  return await axios.get(`${API_URL}/books/author/${authorId}`);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- categories ---------------------------//
 //------------------------- ----------- ---------------------------//
@@ -70,4 +75,9 @@ export const deleteCategory = async (id) => {
 // Update a category by ID
 export const updateCategory = async (id, categoryData) => {
   return await axios.put(`${API_URL}/categories/${id}`, categoryData);
+};
+
+// Fetch books by category ID
+export const getBooksByCategory = async (categoryId) => {
+  return await axios.get(`${API_URL}/books/category/${categoryId}`);
 };
