@@ -30,6 +30,7 @@ function HomePage() {
 
         // Replace the initialBooksData with the data fetched from the API
         setBooks(apiData);
+        console.log(initialBooksData)
 
       } catch (error) {
         console.log(error);
@@ -47,6 +48,7 @@ function HomePage() {
       return book;
     });
     setBooks(updatedBooks);
+    console.log('Updated Books:', updatedBooks);
   };
 
   const filteredBooks = books.filter((book) => {
