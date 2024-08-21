@@ -22,7 +22,7 @@ function App() {
   
   return (
     <div>
-      <Navbar /> {/* Include the Navbar */}
+      <Navbar /> 
       <main className="p-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
