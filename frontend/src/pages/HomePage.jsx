@@ -43,12 +43,13 @@ function HomePage() {
   const handleShelfChange = (id, newShelf) => {
     const updatedBooks = books.map((book) => {
       if (book._id === id) { // Use the unique `_id` field to identify the specific book
+        console.log(book._id)
         return { ...book, status: newShelf };
       }
       return book;
     });
     setBooks(updatedBooks);
-    console.log('Updated Books:', updatedBooks);
+    console.log('Updated Books:', updatedBooks );
   };
 
   const filteredBooks = books.filter((book) => {
