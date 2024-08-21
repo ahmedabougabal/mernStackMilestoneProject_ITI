@@ -130,20 +130,23 @@ router.delete("/:id", async (request, response) => {
 
 router.get("/author/:id", async (request, response) => {
   try {
-    const id = request.params.id;
+    const authorId = request.params.id;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return response.status(400).json({ message: 'Invalid author ID.' });
+    // Validate ObjectId
+    if (!mongoose.Types.ObjectId.isValid(authorId)) {
+      return res.status(400).json({ message: "Invalid author ID." });
     }
 
+    // Fetch books by authorId
+    const books = await Book.find({ AuthorId: authorId });
 
-    const book = await Book.find({AuthorId: id});
-
-    if (!book) {
-      return response.status(404).json({ message: "Book not found" });
+    if (books.length === 0) {
+      return response
+        .status(404)
+        .json({ message: "No books found for this author." });
     }
 
-    return response.status(200).json(book);
+    return response.status(200).json(books);
   } catch (error) {
     console.error("Error fetching books by author:", error);
     response.status(500).send({ message: error.message });
@@ -157,17 +160,24 @@ router.get("/category/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
+    // Check if the category ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return response.status(400).json({ message: 'Invalid Category ID.' });
+      return response.status(400).json({ message: "Invalid category ID." });
     }
 
-    const book = await Book.find({ Category: id });
+    // Find books where the category matches the ID
+    const books = await Book.find({ Category: id });
 
-    return response.status(200).json(book);
+    if (books.length === 0) {
+      return response
+        .status(404)
+        .json({ message: "No books found for this category." });
+    }
+
+    return response.status(200).json(books);
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ responsemessage: error.message });
   }
 });
-
 export default router;

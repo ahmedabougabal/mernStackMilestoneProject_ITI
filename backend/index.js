@@ -13,7 +13,7 @@ import userRoutes from "./routes/userRoutes.js"
 
 
 dotenv.config();
-const Port = process.env.PORT || 5200;
+const Port = process.env.PORT || 5000;
 console.log("MONGO_URI:", process.env.MONGO_URI); // just for Debugging
 
 connectDB();

@@ -7,7 +7,7 @@ import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import Spinner from './Spinner.jsx';
 import AddAndUpdate from './AddAndUpdate';
 import BookDetails from './BookDetails.jsx';
-import { getBooks , getAuthors } from '../services/api'; 
+import { getBooks , getAuthors ,getCategories} from '../services/api'; 
 
 // Placeholder image URL (replace with your own placeholder image)
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
@@ -18,9 +18,13 @@ function BookList() {
   const [loading, setLoading] = useState(false);
   const [changed, setChanged] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showType, setShowType] = useState("");
+  const [showBk, setShowBk] = useState("");
   const [error, setError] = useState(null);
   const [authors, setAuthors] = useState([]);
-  const [authorname, setAuthorname] = useState([]);
+  const [authorname, setAuthorname] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [categoryname, setCategoryname] = useState({});
 
 
 
@@ -71,6 +75,33 @@ function BookList() {
     }, []);
 
 
+    useEffect(() => {
+      authors.forEach(auth => {
+        setAuthorname((pre)=> ({...pre , [auth._id]:`${auth.firstName}  ${auth.lastName}`}))
+      });
+    }, []);
+
+    useEffect(() => {
+      const fetchCat = async () => {
+        try {
+          setLoading(true);
+          const response = await getCategories();
+          setCategories(response.data.data);
+        } catch (error) {
+          setError(error.message || 'Error fetching Categories');
+        }
+        setLoading(false);
+      };
+      fetchCat();
+    }, []);
+
+
+    useEffect(() => {
+      categories.forEach(auth => {
+        setCategoryname((pre)=> ({...pre , [auth._id]:auth.name}))
+      });
+    }, []);
+
     // function author_name(authid){
     //   authors.forEach(auth => {
     //     if(auth._id == authid){
@@ -81,6 +112,12 @@ function BookList() {
     //   }
 
 
+    const getauthValue = (key) => {
+      return authorname[key];
+    };
+    const getcatValue = (key) => {
+      return categoryname[key];
+    };
 
 
 
@@ -88,7 +125,7 @@ function BookList() {
     <>
     <div className='flex justify-between items-center'>
     <h1 className='text-3xl my-8'>Books List</h1>
-      <MdOutlineAddBox onClick={() => setShowModal(true)} className='text-sky-800 text-4xl' />
+      <MdOutlineAddBox onClick={() => {setShowModal(true);setShowType("add");setShowBk(("add"))}} className='text-sky-800 text-5xl' />
   </div>
   {loading ? (
    <Spinner />) :(
@@ -122,26 +159,26 @@ function BookList() {
             {/* {book.name} */}
             {book.title}
           </td>
-          <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-            {book.Category}
 
+          <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
+            {/* {book.Category} */}
+            {getcatValue(book.Category)}
           </td>
           <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
             {/* {author_name(book.AuthorId)} */}
-            {book.AuthorId}
-
-
+            {/* {book.AuthorId} */}
+            {getauthValue(book.AuthorId)}
           </td>
           <td className='border border-slate-700 rounded-md text-center'>
             <div className='flex justify-center gap-x-4'>
               <Link to={`/books/details/${book._id}`}>
                 <BsInfoCircle className='text-2xl text-green-800' />
               </Link>
-                <AiOutlineEdit onClick={() => setShowModal(true)} className='text-2xl text-yellow-600' />
+                <AiOutlineEdit onClick={() => {setShowModal(true);setShowType("update");setShowBk((book._id))}} className='text-2xl text-yellow-600' />
                 <MdOutlineDelete onClick={()  => deleted(book._id)} className='text-2xl text-red-600' />
             </div>
-            {showModal && (
-        <AddAndUpdate book={book} onClose={() =>{ setShowModal(false);setChanged((state)=> !state)} }/>
+            {showModal && ((showBk=="add" || showBk==book._id) &&
+        (<AddAndUpdate book={book} onClose={() =>{ setShowModal(false);setChanged((state)=> !state)} } type={showType}/>)
       )}
           </td>
         </tr>

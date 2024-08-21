@@ -24,6 +24,11 @@ export const addBook = async (bookData) => {
   return await axios.post(`${API_URL}/books`, bookData);
 };
 
+// Update a book
+export const updateBook = async (id, bookData) => {
+  return await axios.put(`${API_URL}/books/${id}`, bookData);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- authors ---------------------------//
 //------------------------- ----------- ---------------------------//
@@ -80,4 +85,15 @@ export const updateCategory = async (id, categoryData) => {
 // Fetch books by category ID
 export const getBooksByCategory = async (categoryId) => {
   return await axios.get(`${API_URL}/books/category/${categoryId}`);
+};
+
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- lsit ---------------------------//
+//------------------------- ----------- ---------------------------//
+
+
+// Fetch a single list user by user ID
+export const getUserList = async (id) => {
+  return await axios.get(`${API_URL}/getUserList/${id}`);
 };
