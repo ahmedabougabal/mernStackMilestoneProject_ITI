@@ -4,7 +4,7 @@ import { Book } from "../models/Book.js";
 
 const router = express.Router();
 
-router.post("/addBook", async (request, response) => {
+router.post("/", async (request, response) => {
   try {
     if (
       !request.body.name ||
@@ -53,11 +53,11 @@ router.get("/:id", async (request, response) => {
     const { id } = request.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return response.status(400).json({ message: 'Invalid book ID.' });
+      return response.status(400).json({ message: "Invalid book ID." });
     }
 
     const book = await Book.findById(id);
-    
+
     if (!book) {
       return response.status(404).json({ message: "Book not found" });
     }
@@ -86,7 +86,7 @@ router.put("/:id", async (request, response) => {
     const { id } = request.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return response.status(400).json({ message: 'Invalid book ID.' });
+      return response.status(400).json({ message: "Invalid book ID." });
     }
 
     const result = await Book.findByIdAndUpdate(id, request.body);
@@ -108,7 +108,7 @@ router.delete("/:id", async (request, response) => {
     const { id } = request.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return response.status(400).json({ message: 'Invalid book ID.' });
+      return response.status(400).json({ message: "Invalid book ID." });
     }
 
     const result = await Book.findByIdAndDelete(id);
@@ -124,20 +124,21 @@ router.delete("/:id", async (request, response) => {
   }
 });
 
+/////////------------------------------------------
+/////////------------------------------------------
+/////////------------------------------------------
 
-
-
-
-router.get("/author/:id", async (request, response) => {
+router.get("/author/:id", async (req, res) => {
   try {
-    const { id } = request.params;
+    const authorId = req.params.id;
 
-    // if (!mongoose.Types.ObjectId.isValid(id)) {
-    //   return response.status(400).json({ message: 'Invalid author ID.' });
-    // }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: 'Invalid author ID.' });
+    }
 
 
-    const book = await Book.find({author: +id});
+    const book = await Book.find({AuthorId: id});
+    console.log(book);
 
     if (!book) {
       return response.status(404).json({ message: "Book not found" });
@@ -145,17 +146,21 @@ router.get("/author/:id", async (request, response) => {
     
     return response.status(200).json(book);
   } catch (error) {
-    console.log(error.message);
-    response.status(500).send({ message: error.message });
+    console.error("Error fetching books by author:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching books." });
   }
 });
 
-
+/////////------------------------------------------
+/////////------------------------------------------
+/////////------------------------------------------
 router.get("/category/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const book = await Book.find({categories: id});
+    const book = await Book.find({ categories: id });
 
     return response.status(200).json(book);
   } catch (error) {
@@ -163,15 +168,5 @@ router.get("/category/:id", async (request, response) => {
     response.status(500).send({ message: error.message });
   }
 });
-
-
-
-
-
-
-
-
-
-
 
 export default router;

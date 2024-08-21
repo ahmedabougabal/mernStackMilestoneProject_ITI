@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "http://localhost:5200";
+
+
+
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- books ---------------------------//
+//------------------------- ----------- ---------------------------//
 
 // Fetch all books
 export const getBooks = async () => {
@@ -10,6 +17,11 @@ export const getBooks = async () => {
 // Fetch a single book by ID
 export const getBookById = async (id) => {
   return await axios.get(`${API_URL}/books/${id}`);
+};
+
+// Add a new book
+export const addBook = async (bookData) => {
+  return await axios.post(`${API_URL}/books`, bookData);
 };
 
 //------------------------- ----------- ---------------------------//
@@ -36,6 +48,11 @@ export const updateAuthor = async (id, authorData) => {
   return await axios.put(`${API_URL}/authors/${id}`, authorData);
 };
 
+// Fetch books by author ID
+export const getBooksByAuthor = async (authorId) => {
+  return await axios.get(`${API_URL}/books/author/${authorId}`);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- categories ---------------------------//
 //------------------------- ----------- ---------------------------//
@@ -60,13 +77,7 @@ export const updateCategory = async (id, categoryData) => {
   return await axios.put(`${API_URL}/categories/${id}`, categoryData);
 };
 
-
-//------------------------- ----------- ---------------------------//
-//-------------------------- lsit ---------------------------//
-//------------------------- ----------- ---------------------------//
-
-
-// Fetch a single list user by user ID
-export const getUserList = async (id) => {
-  return await axios.get(`${API_URL}/getUserList/${id}`);
+// Fetch books by category ID
+export const getBooksByCategory = async (categoryId) => {
+  return await axios.get(`${API_URL}/books/category/${categoryId}`);
 };

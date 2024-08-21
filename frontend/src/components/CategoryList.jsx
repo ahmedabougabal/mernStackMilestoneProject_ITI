@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCategories, addCategory, deleteCategory, updateCategory } from '../services/api'; // Assuming updateCategory function exists
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -117,7 +118,9 @@ const CategoryList = () => {
                       className="border px-2 py-1"
                     />
                   ) : (
-                    category.name
+                    <Link to={`/categories/${category._id}`} className="text-blue-500 hover:underline">
+                      {category.name}
+                    </Link>
                   )}
                 </td>
                 <td className="border px-4 py-2">
