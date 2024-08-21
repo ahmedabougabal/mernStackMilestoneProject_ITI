@@ -94,8 +94,8 @@ const AddAndUpdate = ({ book, onClose }) => {
                     <label className="py-4 px-6 border-b">Enter Book Title:</label>
                         <input
                             type="text"
-                            name="name"
-                            value={inputs.name || ""}
+                            name="title"
+                            value={inputs.title || ""}
                             onChange={handleChange}
                             className="border p-2 w-1/2"
                         />

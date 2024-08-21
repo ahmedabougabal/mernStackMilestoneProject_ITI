@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", async (request, response) => {
   try {
     if (
-      !request.body.name ||
+      !request.body.title ||
       !request.body.AuthorId ||
       !request.body.Category ||
       !request.body.image
@@ -17,7 +17,7 @@ router.post("/", async (request, response) => {
       });
     }
     const newBook = {
-      name: request.body.name,
+      title: request.body.title,
       AuthorId: request.body.AuthorId,
       Category: request.body.Category,
       image: request.body.image,
@@ -73,7 +73,7 @@ router.get("/:id", async (request, response) => {
 router.put("/:id", async (request, response) => {
   try {
     // if (
-    //   !request.body.name ||
+    //   !request.body.title ||
     //   !request.body.AuthorId ||
     //   !request.body.Category ||
     //   !request.body.image
