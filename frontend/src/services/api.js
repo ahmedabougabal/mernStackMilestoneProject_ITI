@@ -92,3 +92,8 @@ export const getBooksByCategory = async (categoryId) => {
 export const getUserList = async (id) => {
   return await axios.get(`${API_URL}/getUserList/${id}`);
 };
+
+// udate user by user ID
+export const updateUserList = async (id,listData) => {
+  return await axios.patch(`${API_URL}/listRead/${id}`, listData);
+};
