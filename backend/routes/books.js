@@ -162,13 +162,24 @@ router.get("/category/:id", async (request, response) => {
   try {
     const { id } = request.params;
 
-    const book = await Book.find({ categories: id });
+    // Check if the category ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: "Invalid category ID." });
+    }
 
-    return response.status(200).json(book);
+    // Find books where the category matches the ID
+    const books = await Book.find({ Category: id });
+
+    if (books.length === 0) {
+      return response
+        .status(404)
+        .json({ message: "No books found for this category." });
+    }
+
+    return response.status(200).json(books);
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
-
 export default router;
