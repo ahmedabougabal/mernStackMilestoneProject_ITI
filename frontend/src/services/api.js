@@ -81,3 +81,14 @@ export const updateCategory = async (id, categoryData) => {
 export const getBooksByCategory = async (categoryId) => {
   return await axios.get(`${API_URL}/books/category/${categoryId}`);
 };
+
+
+//------------------------- ----------- ---------------------------//
+//-------------------------- lsit ---------------------------//
+//------------------------- ----------- ---------------------------//
+
+
+// Fetch a single list user by user ID
+export const getUserList = async (id) => {
+  return await axios.get(`${API_URL}/getUserList/${id}`);
+};
