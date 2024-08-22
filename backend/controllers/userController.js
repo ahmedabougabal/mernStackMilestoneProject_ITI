@@ -51,4 +51,13 @@ const loginUser= asyncHandler(async(req, res)=>{
 })
 
 
-export { createUser, loginUser };
+const logoutCurrentUser= asyncHandler(async(reqq, res)=> {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: newDate(0),
+  })
+res.status(200).json({message: "sorry to see you go! logged out"});
+})
+
+
+export { createUser, loginUser, logoutCurrentUser };
