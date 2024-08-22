@@ -1,6 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import './index.css';
+import 'tailwindcss/tailwind.css';
+
+import Navbar from './components/Navbar'; 
 
 import HomePage from './pages/HomePage';
 import HomeBook from './components/HomeBook';
@@ -11,9 +15,8 @@ import CategoryList from './components/CategoryList';
 import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
 import BookDetails from './components/BookDetails.jsx';
-import Navbar from './components/Navbar'; 
-import './index.css';
-import 'tailwindcss/tailwind.css';
+
+import Footer from './components/Footer'; 
 
 //------------------
 import USauthorList from './components/USauthorList';
@@ -43,6 +46,7 @@ function App() {
           <Route path="/UScategoryList" element={<UScategoryList />} />
         </Routes>
       </main>
+      <Footer/>
     </div>
   );
 }
