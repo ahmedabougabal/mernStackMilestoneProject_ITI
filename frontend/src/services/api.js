@@ -2,9 +2,6 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5200";
 
-
-
-
 //------------------------- ----------- ---------------------------//
 //-------------------------- books ---------------------------//
 //------------------------- ----------- ---------------------------//
@@ -87,11 +84,9 @@ export const getBooksByCategory = async (categoryId) => {
   return await axios.get(`${API_URL}/books/category/${categoryId}`);
 };
 
-
 //------------------------- ----------- ---------------------------//
 //-------------------------- lsit ---------------------------//
 //------------------------- ----------- ---------------------------//
-
 
 // Fetch a single list user by user ID
 export const getUserList = async (id) => {
@@ -99,6 +94,12 @@ export const getUserList = async (id) => {
 };
 
 // udate user by user ID
-export const updateUserList = async (id,listData) => {
+export const updateUserList = async (id, listData) => {
   return await axios.patch(`${API_URL}/listRead/${id}`, listData);
+};
+
+// add user to the list :)
+
+export const getAllList = async (listData) => {
+  return await axios.post(`${API_URL}/addToRead`, listData);
 };
