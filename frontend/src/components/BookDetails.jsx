@@ -1,27 +1,83 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
+import {updateBook} from '../services/api';
+
 
 const BookDetails = () => {
   const [book, setBook] = useState({});
+  const [author, setAuthor] = useState({});
+  const [category, setCategory] = useState({});
   const [loading, setLoading] = useState(false);
+  const [description,setDescription] = useState("")
+  const [edescription,setEdescription] = useState(false)
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`http://localhost:5200/books/${id}`)
+    axios.get(`http://localhost:5200/books/${id}`)
       .then((response) => {
         setBook(response.data);
+        setLoading(false);
+        setDescription(book.description)
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [edescription]);
+
+  useEffect(() => {
+    if(book._id){
+    setLoading(true);
+    axios.get(`http://localhost:5200/authors/${book.AuthorId}`)
+      .then((response) => {
+        setAuthor(response.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
       });
-  }, []);
+    }
+  }, [book]);
+
+  useEffect(() => {
+    if(book._id){
+    setLoading(true);
+    axios.get(`http://localhost:5200/categories/${book.Category}`)
+      .then((response) => {
+        setCategory(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+    }
+  }, [book]);
+
+
+
+
+
+  const handleUpdateDescription = async ()=>{
+    try{
+      const jsondes = {"description": description}
+      const response = await updateBook(book._id,jsondes);
+      setEdescription(false);
+      }catch (error) {
+       console.log(error)
+       setError(error.response.data.message || 'Error updating Description');
+       setEdescription(false);
+     }
+  }
+
+
+
 
   return (
     <div className='p-4'>
@@ -30,23 +86,44 @@ const BookDetails = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
-          {book.image && <img src={book.image || placeholderImage} alt={book.title} className="w-100 h-300 object-cover" />}
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Id</span>
-            <span>{book._id}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Title</span>
-            <span>{book.title}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Author</span>
-            <span>{book.AuthorId}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Category</span>
-            <span>{book.Category}</span>
+        <div className='flex border-2 border-sky-100 rounded-xl w-cover h-[40vh] p-4'>
+          {book.image && <img src={book.image || placeholderImage} alt={book.title} className="w-100 h-200 object-cover" />}
+          <div>
+            <div className='my-4'>
+              <span className='text-2xl mr-4 text-gray-500'>Id</span>
+              <span>{book._id}</span>
+            </div>
+            <div className='my-4'>
+              <span className='text-2xl mr-4 text-gray-500'>Title</span>
+              <span>{book.title}</span>
+            </div>
+            <div className='my-4'>
+            <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
+              <span className='text-2xl mr-4 text-gray-500'>Author</span>
+              <span>{`${author.firstName} ${author.lastName}`}</span>
+              </Link>
+            </div>
+            <div className='my-4'>
+            <Link to={`/categories/${category._id}`} className="text-blue-500 hover:underline">
+              <span className='text-2xl mr-4 text-gray-500'>Category</span>
+              <span>{category.name}</span>
+              </Link>
+            </div>
+            <div className='my-4'>
+            <span className='text-2xl mr-4 text-gray-500'>Description</span>
+              {edescription? (<>
+                    <button onClick={handleUpdateDescription} className="text-green-500 hover:text-green-700 mr-2">✅</button>
+                    <br />
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value) } className="border p-2">
+                      </textarea>               
+                     </>
+                   ) : ( <>
+                    <button onClick={() => (setEdescription(true))} className="text-blue-500 hover:text-blue-700 mr-2">✏️</button>
+                    <br />
+                    <p>{book.description}</p>
+                    </>
+                   ) } 
+            </div>
           </div>
         </div>
       )}
