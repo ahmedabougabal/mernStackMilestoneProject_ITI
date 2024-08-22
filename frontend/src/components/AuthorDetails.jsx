@@ -57,7 +57,7 @@ const AuthorDetails = () => {
   return (
     <div className="p-8">
       <h2 className="text-3xl font-bold mb-4">{author.firstName} {author.lastName}</h2>
-      <p>Biography: {author.biography || 'Biography not available.'}</p>
+      <p>{`Welcome, dear reader! ${author.firstName} ${author.lastName} is thrilled to share their work with you.`}</p>
       <h3 className="text-2xl font-bold mt-8">Books by {author.firstName}:</h3>
 
       <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4">
