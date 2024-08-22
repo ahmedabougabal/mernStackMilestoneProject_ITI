@@ -9,7 +9,8 @@ router.post("/", async (request, response) => {
     if (
       !request.body.title ||
       !request.body.AuthorId ||
-      !request.body.Category
+      !request.body.Category ||
+      !request.body.image
     ) {
       return response.status(400).send({
         message: "Send all required fields",
