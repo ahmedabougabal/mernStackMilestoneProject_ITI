@@ -107,7 +107,10 @@ const AuthorList = () => {
         <tbody>
           {authors.length > 0 ? (
             authors.map((author, index) => (
+            authors.map((author, index) => (
               <tr key={author._id}>
+                <td className="py-4 px-6 border-b text-center">
+                  {index + 1}
                 <td className="py-4 px-6 border-b text-center">
                   {index + 1}
                 </td>
