@@ -110,9 +110,6 @@ const AuthorList = () => {
               <tr key={author._id}>
                 <td className="py-4 px-6 border-b text-center">
                   {index + 1}</td>
-                <td className="py-4 px-6 border-b text-center">
-                  {index + 1}
-                </td>
                 <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
                     <input
