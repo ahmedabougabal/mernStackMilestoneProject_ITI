@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
-import {updateBook,getBooks} from '../services/api';
+import {updateBook} from '../services/api';
 
 
 const BookDetails = () => {
@@ -78,6 +78,7 @@ const BookDetails = () => {
 
 
 
+
   return (
     <div className='p-4'>
       <BackButton />
@@ -103,9 +104,10 @@ const BookDetails = () => {
               </Link>
             </div>
             <div className='my-4'>
-              
+            <Link to={`/categories/${category._id}`} className="text-blue-500 hover:underline">
               <span className='text-2xl mr-4 text-gray-500'>Category</span>
               <span>{category.name}</span>
+              </Link>
             </div>
             <div className='my-4'>
             <span className='text-2xl mr-4 text-gray-500'>Description</span>
