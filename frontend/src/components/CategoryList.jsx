@@ -58,7 +58,6 @@ const CategoryList = () => {
     if (editingCategoryName.trim()) {
       try {
         await updateCategory(editingCategoryId, { name: editingCategoryName.trim() });
-        await updateCategory(editingCategoryId, { name: editingCategoryName.trim() });
         setCategories(
           categories.map((category, index) =>
             category._id === editingCategoryId ? { ...category, name: editingCategoryName } : category
