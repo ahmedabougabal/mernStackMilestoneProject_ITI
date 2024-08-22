@@ -10,6 +10,7 @@ function Navbar() {
         </div>
         <div className="space-x-4">
           <Link to="/" className="text-white hover:text-gray-400">Home</Link>
+          <Link to="/Shelf" className="text-white hover:text-gray-400">Shelf</Link>
           <Link to="/books" className="text-white hover:text-gray-400">Books</Link>
           <Link to="/authors" className="text-white hover:text-gray-400">Authors</Link>
           <Link to="/categories" className="text-white hover:text-gray-400">Categories</Link>

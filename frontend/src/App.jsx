@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import HomePage from './pages/HomePage';
 import HomeBook from './components/HomeBook';
+import Shelf from './components/Shelf';
 import AuthorList from './components/AuthorList';
 import AuthorDetails from './components/AuthorDetails';
 import CategoryList from './components/CategoryList';
@@ -26,7 +27,8 @@ function App() {
       <main className="p-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<HomeBook />} /> 
+          <Route path="/" element={<HomeBook />} />
+          <Route path="/Shelf" element={<Shelf />} /> 
           <Route path="/authors" element={<AuthorList />} />
           <Route path="/authors/:id" element={<AuthorDetails />} />
           <Route path="/books" element={<BookList />} />
