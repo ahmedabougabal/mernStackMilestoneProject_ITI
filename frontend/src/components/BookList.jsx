@@ -25,6 +25,8 @@ function BookList() {
   const [authorname, setAuthorname] = useState({});
   const [categories, setCategories] = useState([]);
   const [categoryname, setCategoryname] = useState({});
+  
+
 
 
 
@@ -76,10 +78,13 @@ function BookList() {
 
 
     useEffect(() => {
+      setLoading(true);
       authors.forEach(auth => {
         setAuthorname((pre)=> ({...pre , [auth._id]:`${auth.firstName}  ${auth.lastName}`}))
       });
-    }, []);
+      setLoading(false);
+      // console.log(JSON.stringify(authorname, null, 2))
+    }, [authors]);
 
     useEffect(() => {
       const fetchCat = async () => {
@@ -97,10 +102,12 @@ function BookList() {
 
 
     useEffect(() => {
+      setLoading(true);
       categories.forEach(auth => {
         setCategoryname((pre)=> ({...pre , [auth._id]:auth.name}))
       });
-    }, []);
+      setLoading(false);
+    }, [categories]);
 
     // function author_name(authid){
     //   authors.forEach(auth => {
@@ -113,10 +120,11 @@ function BookList() {
 
 
     const getauthValue = (key) => {
-      return authorname[key];
+      // console.log(authorname[key])
+      return authorname[key] || key;
     };
     const getcatValue = (key) => {
-      return categoryname[key];
+      return categoryname[key] || key ;
     };
 
 
@@ -164,11 +172,13 @@ function BookList() {
             {/* {book.Category} */}
             {getcatValue(book.Category)}
           </td>
+
           <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
             {/* {author_name(book.AuthorId)} */}
             {/* {book.AuthorId} */}
             {getauthValue(book.AuthorId)}
           </td>
+
           <td className='border border-slate-700 rounded-md text-center'>
             <div className='flex justify-center gap-x-4'>
               <Link to={`/books/details/${book._id}`}>
