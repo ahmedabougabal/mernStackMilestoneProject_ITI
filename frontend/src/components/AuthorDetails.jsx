@@ -64,6 +64,7 @@ const AuthorDetails = () => {
   return (
     <div className="p-8">
       <h2 className="text-3xl font-bold mb-4">{author.firstName} {author.lastName}</h2>
+      <h2 className="text-3xl font-bold mb-4">The Author Birth Date : {new Date(author.birthDate).toDateString()} </h2>
       <p>{`Welcome, dear reader! ${author.firstName} ${author.lastName} is thrilled to share their work with you.`}</p>
       <h3 className="text-2xl font-bold mt-8">Books by {author.firstName}:</h3>
 
