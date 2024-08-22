@@ -111,7 +111,11 @@ function HomePage() {
                     {book.book ? <img src={book.book.image} alt={book.book.title} className="w-12 h-12" /> : 'No Cover'}
                   </td>
                   <td className="px-4 py-2 text-blue-500 cursor-pointer">
-                    {book.book ? book.book.title : 'No Title'}
+                    {book.book ? (
+                      <a href={`http://localhost:5173/books/details/${book.book._id}`} className="hover:underline">
+                        {book.book.title}
+                      </a>
+                    ) : 'No Title'}
                   </td>
                   <td className="px-4 py-2">
                     {book.author ? `${book.author.firstName} ${book.author.lastName}` : 'Unknown Author'}
