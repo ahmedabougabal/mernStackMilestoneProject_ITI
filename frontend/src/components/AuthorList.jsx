@@ -97,7 +97,7 @@ const AuthorList = () => {
       <table className="w-3/4 mx-auto bg-white text-lg">
         <thead>
           <tr>
-            <th className="py-4 px-6 border-b">No.</th>
+            <th className="py-4 px-6 border-b">Row Number</th>
             <th className="py-4 px-6 border-b">First Name</th>
             <th className="py-4 px-6 border-b">Last Name</th>
             <th className="py-4 px-6 border-b">Date of Birth</th>
@@ -107,10 +107,7 @@ const AuthorList = () => {
         <tbody>
           {authors.length > 0 ? (
             authors.map((author, index) => (
-            authors.map((author, index) => (
               <tr key={author._id}>
-                <td className="py-4 px-6 border-b text-center">
-                  {index + 1}
                 <td className="py-4 px-6 border-b text-center">
                   {index + 1}
                 </td>
