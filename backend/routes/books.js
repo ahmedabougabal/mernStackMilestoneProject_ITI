@@ -9,8 +9,7 @@ router.post("/", async (request, response) => {
     if (
       !request.body.title ||
       !request.body.AuthorId ||
-      !request.body.Category ||
-      !request.body.image
+      !request.body.Category
     ) {
       return response.status(400).send({
         message: "Send all required fields",
@@ -187,6 +186,52 @@ router.put("/reviews/:id", async (request, response) => {
 
 
 
+
+/////////------------------------------------------
+// Route for review
+router.put("/reviews/:id", async (request, response) => {
+  try {
+    if (!request.body.name || !request.body.rate || !request.body.comment) {
+      return response.status(400).send({
+        message: "Send all required fields",
+      });
+    }
+    if (request.body.rate < 0 || request.body.rate > 5) {
+      return response.status(400).send({
+        message: "rate is between 1 and 5",
+      });
+    }
+    const { id } = request.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return response.status(400).json({ message: "Invalid book ID." });
+    }
+
+    const book = await Book.findById(id);
+    let sumrate = 0;
+    let review = book.reviews;
+    // console.log(review)
+    review.push(request.body);
+    // console.log(review)
+    review.forEach((revieww) => {
+      sumrate += revieww.rate;
+    });
+    sumrate = sumrate / review.length;
+
+    const rev = { rating: sumrate.toFixed(1), reviews: review };
+
+    const result = await Book.findByIdAndUpdate(id, rev);
+
+    if (!result) {
+      return response.status(404).json({ message: "Book not found" });
+    }
+
+    return response.status(200).send({ message: "Book updated successfully" });
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
 
 /////////------------------------------------------
 /////////------------------------------------------

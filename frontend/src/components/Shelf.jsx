@@ -7,7 +7,7 @@ function Shelf() {
 const [books, setBooks] = useState(initialBooksData);
 const [currentPage, setCurrentPage] = useState(1);
 const [selectedCategory, setSelectedCategory] = useState('All');
-const itemsPerPage = 2; // Number of items to show per page
+const itemsPerPage = 7; // Number of items to show per page
 
 const handlePageChange = (page) => {
 setCurrentPage(page);

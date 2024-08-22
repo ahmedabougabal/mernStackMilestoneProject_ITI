@@ -15,7 +15,9 @@ import Navbar from './components/Navbar';
 import './index.css';
 import 'tailwindcss/tailwind.css';
 
-
+//------------------
+import USauthorList from './components/USauthorList';
+import UScategoryList from './components/UScategoryList';
 ///////////----------------------------
 
 function App() {  
@@ -34,7 +36,11 @@ function App() {
           <Route path="/books" element={<BookList />} />
           <Route path='/books/details/:id' element={<BookDetails />} />
           <Route path="/categories" element={<CategoryList />} />
-          <Route path="/categories/:id" element={<CategoryDetails />} /> 
+          <Route path="/categories/:id" element={<CategoryDetails />} />
+
+{/* users pages */}
+          <Route path="/USauthorList" element={<USauthorList />} />
+          <Route path="/UScategoryList" element={<UScategoryList />} />
         </Routes>
       </main>
     </div>
