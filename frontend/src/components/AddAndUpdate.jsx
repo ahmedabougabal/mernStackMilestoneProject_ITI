@@ -16,6 +16,7 @@ const AddAndUpdate = ({ book, onClose, type }) => {
     const [error, setError] = useState(null);
 
 
+console.log(book.title)
   
   
     useEffect(() => {
