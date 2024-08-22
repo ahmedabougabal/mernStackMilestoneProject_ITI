@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import BookList from '../components/BookList';
 import { getUserList, updateUserList } from '../services/api'; // Import your API function
+import HomeBook from './../components/HomeBook';
 
 const initialBooksData = [];
 
@@ -151,7 +151,7 @@ function HomePage() {
         </div>
       </div>
 
-      <BookList />
+      <HomeBook />
     </div>
   );
 }

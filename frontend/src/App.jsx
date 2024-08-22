@@ -10,7 +10,7 @@ import CategoryList from './components/CategoryList';
 import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
 import BookDetails from './components/BookDetails.jsx';
-import Navbar from './components/Navbar'; // Import the Navbar
+import Navbar from './components/Navbar'; 
 import './index.css';
 import 'tailwindcss/tailwind.css';
 
@@ -26,7 +26,7 @@ function App() {
       <main className="p-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/homebook" element={<HomeBook />} /> 
+          <Route path="/" element={<HomeBook />} /> 
           <Route path="/authors" element={<AuthorList />} />
           <Route path="/authors/:id" element={<AuthorDetails />} />
           <Route path="/books" element={<BookList />} />
