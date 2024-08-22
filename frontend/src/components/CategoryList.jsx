@@ -61,7 +61,6 @@ const CategoryList = () => {
         await updateCategory(editingCategoryId, { name: editingCategoryName.trim() });
         setCategories(
           categories.map((category, index) =>
-          categories.map((category, index) =>
             category._id === editingCategoryId ? { ...category, name: editingCategoryName } : category
           )
         );
@@ -109,9 +108,7 @@ const CategoryList = () => {
         <tbody>
           {categories.length > 0 ? (
             categories.map((category, index) => (
-            categories.map((category, index) => (
               <tr key={category._id}>
-                <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">
                   {editingCategoryId === category._id ? (

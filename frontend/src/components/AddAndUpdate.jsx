@@ -15,8 +15,9 @@ const AddAndUpdate = ({ book, onClose, type }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // const placeholderImage = "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="
 
-console.log(book.title)
+
   
   
     useEffect(() => {
@@ -131,7 +132,7 @@ console.log(book.title)
                         <input
                             type="text"
                             name="image"
-                            value={inputs.image || ""}
+                            value={inputs.image}
                             onChange={handleChange}
                             className="border p-2 w-1/2"
                         />
