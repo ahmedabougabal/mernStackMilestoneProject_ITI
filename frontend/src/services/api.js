@@ -29,11 +29,6 @@ export const updateBook = async (id, bookData) => {
   return await axios.put(`${API_URL}/books/${id}`, bookData);
 };
 
-// Delete a new Author
-export const deleteBook = async (id) => {
-  return await axios.delete(`${API_URL}/books/${id}`);
-};
-
 //------------------------- ----------- ---------------------------//
 //-------------------------- authors ---------------------------//
 //------------------------- ----------- ---------------------------//
