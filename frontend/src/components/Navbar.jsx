@@ -14,6 +14,10 @@ function Navbar() {
           <Link to="/books" className="text-white hover:text-gray-400">Books</Link>
           <Link to="/authors" className="text-white hover:text-gray-400">Authors</Link>
           <Link to="/categories" className="text-white hover:text-gray-400">Categories</Link>
+          
+          {/* user pages */}
+          <Link to="/USauthorList" className="text-white hover:text-gray-400">Authors</Link>
+          <Link to="/UScategoryList" className="text-white hover:text-gray-400">Categories</Link>
         </div>
       </div>
     </nav>
