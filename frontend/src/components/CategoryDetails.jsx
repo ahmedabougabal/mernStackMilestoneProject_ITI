@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CategoryDetails = () => {
-  const { id } = useParams(); // Get the category ID from the URL params
+  const { id } = useParams(); 
+  const navigate = useNavigate(); // Use the useNavigate hook
   const [category, setCategory] = useState(null);
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState({});
@@ -53,6 +54,11 @@ const CategoryDetails = () => {
   if (error) return <div className="text-red-500 p-4">{error}</div>;
   if (!category) return <div className="p-4">Loading...</div>;
 
+  const handleAuthorClick = (authorId) => {
+    navigate(`/authors/${authorId}`);
+  };
+
+
   return (
     <div className="p-8">
       <h2 className="text-3xl font-bold mb-4">Category: {category.name}</h2>
@@ -74,7 +80,8 @@ const CategoryDetails = () => {
               </div>
               <div className="p-4 flex-1">
                 <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-                <p className="text-gray-600 mt-1">
+                <p className="text-blue-600 mt-1 cursor-pointer hover:underline"
+                  onClick={() => handleAuthorClick(book.AuthorId)}>
                   by {authors[book.AuthorId] || 'Unknown Author'}
                 </p>
                 <p className="text-gray-600 mt-1">{book.description}</p>
