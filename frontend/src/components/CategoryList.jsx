@@ -57,9 +57,9 @@ const CategoryList = () => {
   const handleUpdateCategory = async () => {
     if (editingCategoryName.trim()) {
       try {
-        const response = await updateCategory(editingCategoryId, { name: editingCategoryName.trim() });
+        await updateCategory(editingCategoryId, { name: editingCategoryName.trim() });
         setCategories(
-          categories.map((category) =>
+          categories.map((category, index) =>
             category._id === editingCategoryId ? { ...category, name: editingCategoryName } : category
           )
         );
@@ -99,16 +99,16 @@ const CategoryList = () => {
       <table className="table-auto w-full border-collapse mt-4">
         <thead>
           <tr>
-            <th className="border px-4 py-2">ID</th>
+            <th className="border px-4 py-2">#</th>
             <th className="border px-4 py-2">Name</th>
             <th className="border px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
           {categories.length > 0 ? (
-            categories.map((category) => (
+            categories.map((category, index) => (
               <tr key={category._id}>
-                <td className="border px-4 py-2">{category._id}</td>
+                <td className="border px-4 py-2">{index + 1}</td>
                 <td className="border px-4 py-2">
                   {editingCategoryId === category._id ? (
                     <input

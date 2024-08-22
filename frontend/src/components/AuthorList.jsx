@@ -97,7 +97,7 @@ const AuthorList = () => {
       <table className="w-3/4 mx-auto bg-white text-lg">
         <thead>
           <tr>
-            <th className="py-4 px-6 border-b">ID</th>
+            <th className="py-4 px-6 border-b">Row Number</th>
             <th className="py-4 px-6 border-b">First Name</th>
             <th className="py-4 px-6 border-b">Last Name</th>
             <th className="py-4 px-6 border-b">Date of Birth</th>
@@ -106,12 +106,10 @@ const AuthorList = () => {
         </thead>
         <tbody>
           {authors.length > 0 ? (
-            authors.map((author) => (
+            authors.map((author, index) => (
               <tr key={author._id}>
-                <td className="py-4 px-6 border-b">
-                  <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
-                    {author._id}
-                  </Link>
+                <td className="py-4 px-6 border-b text-center">
+                  {index + 1}
                 </td>
                 <td className="py-4 px-6 border-b">
                   {editingAuthorId === author._id ? (
