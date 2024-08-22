@@ -141,9 +141,7 @@ router.get("/author/:id", async (request, response) => {
     const books = await Book.find({ AuthorId: authorId });
 
     if (books.length === 0) {
-      return response
-        .status(404)
-        .json({ message: "No books found for this author." });
+      return response.status(200).json([]);
     }
 
     return response.status(200).json(books);
@@ -169,9 +167,7 @@ router.get("/category/:id", async (request, response) => {
     const books = await Book.find({ Category: id });
 
     if (books.length === 0) {
-      return response
-        .status(404)
-        .json({ message: "No books found for this category." });
+      return response.status(200).json([]);
     }
 
     return response.status(200).json(books);
