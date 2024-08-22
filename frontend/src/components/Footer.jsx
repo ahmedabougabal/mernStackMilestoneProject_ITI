@@ -6,42 +6,36 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="sm:flex sm:flex-wrap sm:-mx-4 md:py-4">
           <div className="px-4 sm:w-1/2 md:w-1/4 xl:w-1/6">
-            <h5 className="text-xl font-bold mb-6">Features</h5>
+            <h5 className="text-xl font-bold mb-6">Cool stuff</h5>
             <ul className="list-none footer-links">
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Cool stuff</a>
+                <a href="https://www.linkedin.com/in/ibrahim1saber/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Ibrahim Saber</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Random feature</a>
+                <a href="https://www.linkedin.com/in/mahmoud-ismail-991216235?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" className="border-b border-solid border-transparent hover:border-white hover:text-white">Mahmoud Ismail</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Team feature</a>
+                <a href="https://www.linkedin.com/in/mahmoud-yehia-425325221?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" className="border-b border-solid border-transparent hover:border-white hover:text-white">Mahmoud yehia</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Stuff for developers</a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Another one</a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Last time</a>
+                <a href="https://www.linkedin.com/in/ahmed-abou-gabal/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Ahmed AboGabal</a>
               </li>
             </ul>
           </div>
           <div className="px-4 sm:w-1/2 md:w-1/4 xl:w-1/6 mt-8 sm:mt-0">
-            <h5 className="text-xl font-bold mb-6">Resources</h5>
+            <h5 className="text-xl font-bold mb-6">Pages</h5>
             <ul className="list-none footer-links">
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Resource</a>
+                <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Home</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Resource name</a>
+                <a href="/books" className="border-b border-solid border-transparent hover:border-white hover:text-white">Books</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Another resource</a>
+                <a href="/authors" className="border-b border-solid border-transparent hover:border-white hover:text-white">Authors</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Final resource</a>
+                <a href="/categories" className="border-b border-solid border-transparent hover:border-white hover:text-white">Categories</a>
               </li>
             </ul>
           </div>
@@ -66,13 +60,13 @@ const Footer = () => {
             <h5 className="text-xl font-bold mb-6">Help</h5>
             <ul className="list-none footer-links">
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Support</a>
+                <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Support</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Help Center</a>
+                <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Help Center</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="border-b border-solid border-transparent hover:border-white hover:text-white">Contact Us</a>
+                <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -94,19 +88,18 @@ const Footer = () => {
 
         <div className="sm:flex sm:flex-wrap sm:-mx-4 mt-6 pt-6 sm:mt-12 sm:pt-12 border-t border-gray-600">
           <div className="sm:w-full px-4 md:w-1/6">
-            <strong>FWR</strong>
+            <strong>ITI Mern Stack project</strong>
           </div>
           <div className="px-4 sm:w-1/2 md:w-1/4 mt-4 md:mt-0">
             <h6 className="font-bold mb-2">Address</h6>
             <address className="not-italic mb-4 text-sm">
-              123 6th St.<br />
-              Melbourne, FL 32904
+            Building 4, Knowledge City <br/>at New Administrative Capital, Cairo, Egypt
             </address>
           </div>
           <div className="px-4 sm:w-1/2 md:w-1/4 mt-4 md:mt-0">
-            <h6 className="font-bold mb-2">Free Resources</h6>
-            <p className="mb-4 text-sm">Use our HTML blocks for <strong>FREE</strong>.<br />
-              <em>All are MIT License</em></p>
+            <h6 className="font-bold mb-2">About Us</h6>
+            <p className="mb-4 text-sm">This page was created by 4 students <br/>from the <strong>Institute of Information Technology</strong>
+              </p>
           </div>
           <div className="px-4 md:w-1/4 md:ml-auto mt-6 sm:mt-4 md:mt-0">
             <button className="px-4 py-2 bg-purple-800 hover:bg-purple-900 rounded text-white">Get Started</button>
