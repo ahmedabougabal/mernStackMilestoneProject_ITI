@@ -67,49 +67,41 @@ function BookList() {
     useEffect(() => {
       const fetchAuthors = async () => {
         try {
-          setLoading(true);
           const response = await getAuthors();
           setAuthors(response.data.data);
           // console.log(authors)
         } catch (error) {
           setError(error.message || 'Error fetching authors');
         }
-        setLoading(false);
       };
       fetchAuthors();
     }, []);
 
 
     useEffect(() => {
-      setLoading(true);
       authors.forEach(auth => {
         setAuthorname((pre)=> ({...pre , [auth._id]:`${auth.firstName}  ${auth.lastName}`}))
       });
-      setLoading(false);
       // console.log(JSON.stringify(authorname, null, 2))
     }, [authors]);
 
     useEffect(() => {
       const fetchCat = async () => {
         try {
-          setLoading(true);
           const response = await getCategories();
           setCategories(response.data.data);
         } catch (error) {
           setError(error.message || 'Error fetching Categories');
         }
-        setLoading(false);
       };
       fetchCat();
     }, []);
 
 
     useEffect(() => {
-      setLoading(true);
       categories.forEach(auth => {
         setCategoryname((pre)=> ({...pre , [auth._id]:auth.name}))
       });
-      setLoading(false);
     }, [categories]);
 
     // function author_name(authid){
