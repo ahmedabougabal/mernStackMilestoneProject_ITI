@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { getBooksByAuthor } from '../services/api';  // Import the function
-
+import { getBooksByAuthor } from '../services/api'; // Import the function
 
 const AuthorDetails = () => {
   const { id } = useParams();
   const [author, setAuthor] = useState(null);
   const [books, setBooks] = useState([]);
+  const [categories, setCategories] = useState({});
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -21,11 +21,26 @@ const AuthorDetails = () => {
       }
     };
 
-    // Use the getBooksByAuthor function to fetch books
     const fetchAuthorBooks = async () => {
       try {
         const response = await getBooksByAuthor(id);
-        setBooks(response.data);
+        const booksData = response.data;
+
+        // Fetch category data for each book
+        const categoryIds = [...new Set(booksData.map(book => book.Category))];
+        const categoryPromises = categoryIds.map(categoryId =>
+          axios.get(`http://localhost:5200/categories/${categoryId}`)
+        );
+
+        const categoryResponses = await Promise.all(categoryPromises);
+        const categoriesData = categoryResponses.reduce((acc, categoryResponse) => {
+          const category = categoryResponse.data;
+          acc[category._id] = category.name;
+          return acc;
+        }, {});
+
+        setBooks(booksData);
+        setCategories(categoriesData);
       } catch (error) {
         setError('Error fetching books');
         console.error("Error fetching books:", error);
@@ -61,7 +76,7 @@ const AuthorDetails = () => {
               </div>
               <div className="p-4 flex-1">
                 <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-                <p className="text-gray-600 mt-1">Category: {book.categories || 'Unknown'}</p>
+                <p className="text-gray-600 mt-1">Category: {categories[book.Category] || 'Unknown'}</p>
               </div>
             </div>
           ))
