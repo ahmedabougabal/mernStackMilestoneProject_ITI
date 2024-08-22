@@ -8,6 +8,7 @@ function HomePage() {
   const [books, setBooks] = useState(initialBooksData);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const itemsPerPage = 2; // Number of items to show per page
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -16,6 +17,7 @@ function HomePage() {
   const handleCategoryChange = (category) => {
     console.log(`Category clicked: ${category}`);
     setSelectedCategory(category);
+    setCurrentPage(1); // Reset to the first page when category changes
   };
 
   const IdUser = localStorage.getItem("IdUser");
@@ -30,7 +32,7 @@ function HomePage() {
 
         // Replace the initialBooksData with the data fetched from the API
         setBooks(apiData);
-        console.log(initialBooksData)
+        console.log(initialBooksData);
 
       } catch (error) {
         console.log(error);
@@ -53,23 +55,31 @@ function HomePage() {
       updateBooks();
     }
   }, [books]);
-  
+
   const handleShelfChange = (id, newShelf) => {
     const updatedBooks = books.map((book) => {
       if (book._id === id) { // Use the unique `_id` field to identify the specific book
-        console.log(book._id)
+        console.log(book._id);
         return { ...book, status: newShelf };
       }
       return book;
     });
     setBooks(updatedBooks);
-    console.log('Updated Books:', updatedBooks );
+    console.log('Updated Books:', updatedBooks);
   };
 
   const filteredBooks = books.filter((book) => {
     if (selectedCategory === 'All') return true;
     return book.status === selectedCategory.toLowerCase().replace(' ', '');
   });
+
+  // Calculate the indices for slicing the array
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedBooks = filteredBooks.slice(startIndex, endIndex);
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
 
   return (
     <div>
@@ -95,7 +105,7 @@ function HomePage() {
               </tr>
             </thead>
             <tbody>
-              {filteredBooks.map((book, index) => (
+              {paginatedBooks.map((book, index) => (
                 <tr key={index} className="border-t">
                   <td className="px-4 py-2">
                     {book.book ? <img src={book.book.image} alt={book.book.title} className="w-12 h-12" /> : 'No Cover'}
@@ -123,22 +133,22 @@ function HomePage() {
           </table>
           <div className="flex justify-center mt-4 space-x-2">
             <button 
-              onClick={() => handlePageChange(1)} 
+              onClick={() => handlePageChange(Math.max(1, currentPage - 1))} 
               className="px-3 py-1 border rounded bg-gray-200"
             >
               {'<'}
             </button>
-            {[1, 2, 3].map((page) => (
+            {[...Array(totalPages)].map((_, pageIndex) => (
               <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`px-3 py-1 border rounded ${currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                key={pageIndex}
+                onClick={() => handlePageChange(pageIndex + 1)}
+                className={`px-3 py-1 border rounded ${currentPage === pageIndex + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
               >
-                {page}
+                {pageIndex + 1}
               </button>
             ))}
             <button 
-              onClick={() => handlePageChange(3)} 
+              onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} 
               className="px-3 py-1 border rounded bg-gray-200"
             >
               {'>'}
