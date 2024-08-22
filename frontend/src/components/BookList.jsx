@@ -33,16 +33,19 @@ function BookList() {
 
 
   useEffect(() => {
-    setLoading(true);
-    axios.get('http://localhost:5200/books')
-      .then((response) => {
+    const fetchBooks = async () => {
+      try {
+        setLoading(true);
+        const response = await getBooks();
         setBooks(response.data.data);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.log(error);
+        setError(error.message || 'Error fetching Books');
         setLoading(false);
-      });
+      }
+    };
+    fetchBooks();
   }, [changed]);
 
 
