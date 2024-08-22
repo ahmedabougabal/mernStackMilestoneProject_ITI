@@ -6,6 +6,7 @@ const CategoryDetails = () => {
   const { id } = useParams(); // Get the category ID from the URL params
   const [category, setCategory] = useState(null);
   const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState({});
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -22,7 +23,23 @@ const CategoryDetails = () => {
     const fetchCategoryBooks = async () => {
       try {
         const response = await axios.get(`http://localhost:5200/books/category/${id}`);
-        setBooks(response.data);
+        const booksData = response.data;
+
+        // Fetch author data for each book
+        const authorIds = [...new Set(booksData.map(book => book.AuthorId))];
+        const authorPromises = authorIds.map(authorId =>
+          axios.get(`http://localhost:5200/authors/${authorId}`)
+        );
+
+        const authorResponses = await Promise.all(authorPromises);
+        const authorsData = authorResponses.reduce((acc, authorResponse) => {
+          const author = authorResponse.data;
+          acc[author._id] = `${author.firstName} ${author.lastName}`;
+          return acc;
+        }, {});
+
+        setBooks(booksData);
+        setAuthors(authorsData);
       } catch (error) {
         setError('Error fetching books');
         console.error("Error fetching books:", error);
@@ -57,24 +74,19 @@ const CategoryDetails = () => {
               </div>
               <div className="p-4 flex-1">
                 <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-                {book.author && book.author.firstName && book.author.lastName ? (
-                  <p className="text-gray-600 mt-1">
-                    by {book.author.firstName} {book.author.lastName}
-                  </p>
-                ) : (
-                  <p className="text-gray-600 mt-1">Author information not available</p>
-                )}
+                <p className="text-gray-600 mt-1">
+                  by {authors[book.AuthorId] || 'Unknown Author'}
+                </p>
                 <p className="text-gray-600 mt-1">{book.description}</p>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-gray-600">No books found for this category.</p>
+          <p className="text-gray-600">No books related to this category yet.</p>
         )}
       </div>
     </div>
   );
-  
 };
 
 export default CategoryDetails;
