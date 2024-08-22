@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Spinner from './Spinner.jsx';
+import { Link } from 'react-router-dom';
 import { getBooks, getAuthors ,getCategories } from '../services/api';
 
 // Placeholder image URL (replace with your own placeholder image)
@@ -104,13 +105,16 @@ function HomeBook() {
           <div
             key={book._id}
             className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
+
           >
             <div className="w-full h-100 overflow-hidden">
+            <Link to={`/books/details/${book._id}`}>
               <img
                 src={book.image || placeholderImage} // Use placeholder image if no book image
                 alt={book.title}
                 className="w-full h-full object-fit"
               />
+              </Link>
             </div>
             <div className="p-4 flex-1">
               <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
@@ -118,6 +122,7 @@ function HomeBook() {
               <p className="text-gray-600 mt-1">Category: {getcatValue(book.Category)}</p>
             </div>
           </div>
+          
         ))
       ) : (
         <p className="text-gray-600">No books available</p>
