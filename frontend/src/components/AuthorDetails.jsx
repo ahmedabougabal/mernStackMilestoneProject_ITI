@@ -3,14 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getBooksByAuthor } from '../services/api';
 
+
 const AuthorDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate(); 
   const [author, setAuthor] = useState(null);
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState({});
   const [error, setError] = useState(null);
-
+  const placeholderImage = "https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="
   useEffect(() => {
     const fetchAuthorDetails = async () => {
       try {
@@ -55,8 +56,9 @@ const AuthorDetails = () => {
   if (error) return <div className="text-red-500">{error}</div>;
   if (!author) return <div>Loading...</div>;
 
+  // Navigate to CategoryDetails page 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/categories/${categoryId}`); // Navigate to CategoryDetails page
+    navigate(`/categories/${categoryId}`); 
   };
 
   return (
@@ -74,7 +76,7 @@ const AuthorDetails = () => {
             >
               <div className="w-full h-64 overflow-hidden">
                 <img
-                  src={book.image || placeholderImage} // Use placeholder image if no book image
+                  src={book.image || placeholderImage} // going to use placeholder image if no book image :)
                   alt={book.title}
                   className="w-full h-full object-cover"
                 />
