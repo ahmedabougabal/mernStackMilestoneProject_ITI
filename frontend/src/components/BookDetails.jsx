@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
 import {updateBook} from '../services/api';
@@ -85,7 +86,7 @@ const BookDetails = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className='flex border-2 border-sky-100 rounded-xl w-fit h-[40vh] p-4'>
+        <div className='flex border-2 border-sky-100 rounded-xl w-cover h-[40vh] p-4'>
           {book.image && <img src={book.image || placeholderImage} alt={book.title} className="w-100 h-200 object-cover" />}
           <div>
             <div className='my-4'>
@@ -97,12 +98,16 @@ const BookDetails = () => {
               <span>{book.title}</span>
             </div>
             <div className='my-4'>
+            <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
               <span className='text-2xl mr-4 text-gray-500'>Author</span>
               <span>{`${author.firstName} ${author.lastName}`}</span>
+              </Link>
             </div>
             <div className='my-4'>
+            <Link to={`/categories/${category._id}`} className="text-blue-500 hover:underline">
               <span className='text-2xl mr-4 text-gray-500'>Category</span>
               <span>{category.name}</span>
+              </Link>
             </div>
             <div className='my-4'>
             <span className='text-2xl mr-4 text-gray-500'>Description</span>
