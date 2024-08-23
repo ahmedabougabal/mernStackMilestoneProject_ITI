@@ -12,11 +12,12 @@ const BookDetails = () => {
   const [book, setBook] = useState({});
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
-  const [reviews, setReviews] = useState([]); // State for reviews
+  const [reviews, setReviews] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
   const [edescription, setEdescription] = useState(false);
   const [rating, setRating] = useState(0);
+  const [newreview, setNewreview] = useState(false); 
   const { id } = useParams();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const BookDetails = () => {
         console.log(error);
         setLoading(false);
       });
-  }, [edescription, id]);
+  }, [edescription, id,newreview]);
 
   useEffect(() => {
     if (book._id) {
@@ -82,6 +83,7 @@ const BookDetails = () => {
       console.log(review)
       const response = await axios.put(`http://localhost:5200/books/reviews/${id}`,review);
       setReviews([...reviews, response.data]);
+      setNewreview((state)=> !state)
     } catch (error) {
       console.log(error);
     }
