@@ -4,14 +4,19 @@ import { useParams, Link } from 'react-router-dom';
 import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
 import { updateBook } from '../services/api';
+import StarRating from './StarRating';
+import ReviewsList from './ReviewsList';  // Import the ReviewsList component
+import AddReviewForm from './AddReviewForm';  // Import the AddReviewForm component
 
 const BookDetails = () => {
   const [book, setBook] = useState({});
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
+  const [reviews, setReviews] = useState([]); // State for reviews
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
   const [edescription, setEdescription] = useState(false);
+  const [rating, setRating] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,8 +24,10 @@ const BookDetails = () => {
     axios.get(`http://localhost:5200/books/${id}`)
       .then((response) => {
         setBook(response.data);
-        setLoading(false);
         setDescription(response.data.description);
+        setRating(response.data.rating);
+        setReviews(response.data.reviews)
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -58,14 +65,25 @@ const BookDetails = () => {
     }
   }, [book]);
 
+
   const handleUpdateDescription = async () => {
     try {
       const jsondes = { description: description };
-      const response = await updateBook(book._id, jsondes);
+      await updateBook(book._id, jsondes);
       setEdescription(false);
     } catch (error) {
       console.log(error);
       setEdescription(false);
+    }
+  };
+
+  const handleAddReview = async (review) => {
+    try {
+      console.log(review)
+      const response = await axios.put(`http://localhost:5200/books/reviews/${id}`,review);
+      setReviews([...reviews, response.data]);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -98,12 +116,12 @@ const BookDetails = () => {
 
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-extrabold text-gray-800">{book.title}</h2>
+            <StarRating rating={rating} />
 
             <div className="my-4">
               <span className="text-2xl mr-4 text-gray-500">Id:</span>
               <span>{book._id}</span>
             </div>
-
             <div className="my-4">
               <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
                 <span className="text-2xl mr-4 text-gray-500">Author:</span>
@@ -148,6 +166,12 @@ const BookDetails = () => {
             <li className="text-sm">Category <span className="ml-4 float-right">{category.name}</span></li>
             <li className="text-sm">Description <span className="ml-4 float-right">{book.description}</span></li>
           </ul>
+        </div>
+
+        <div className="mt-16">
+          <h3 className="text-xl font-bold text-gray-800">Reviews</h3>
+          <ReviewsList reviews={reviews} />
+          <AddReviewForm onAddReview={handleAddReview} />
         </div>
       </div>
     </div>

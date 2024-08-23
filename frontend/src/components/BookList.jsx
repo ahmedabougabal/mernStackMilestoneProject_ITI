@@ -156,7 +156,7 @@ function BookList() {
             {index + 1}
           </td>
           <td className='border border-slate-700 rounded-md text-center max-md:hidden flex justify-center p-0'>
-           {book.image && <img src={book.image || placeholderImage} alt={book.title} className="w-1/3 h-1/2 object-cover" />}
+           {book.image && <img src={book.image} alt={book.title} className="w-1/4 h-1/3 object-cover" />}
           </td>
           <td className='border border-slate-700 rounded-md text-center'>
             {/* {book.name} */}
