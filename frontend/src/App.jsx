@@ -3,11 +3,16 @@ import React from 'react';
 import axios from 'axios';
 import './index.css';
 import 'tailwindcss/tailwind.css';
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from './components/Navbar'; 
 import Navigation from "./pages/Auth/Navigation";
+
+
+import Navbar from './components/Navbar'; 
+
 
 import HomePage from './pages/HomePage';
 import HomeBook from './components/HomeBook';
@@ -18,10 +23,20 @@ import CategoryList from './components/CategoryList';
 import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
 import BookDetails from './components/BookDetails.jsx';
+
 import Footer from './components/Footer'; 
 
 import USauthorList from './components/USauthorList';
 import UScategoryList from './components/UScategoryList';
+=======
+
+import Footer from './components/Footer'; 
+
+//------------------
+import USauthorList from './components/USauthorList';
+import UScategoryList from './components/UScategoryList';
+///////////----------------------------
+
 
 function App() {  
   return (
@@ -41,6 +56,7 @@ function App() {
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/categories/:id" element={<CategoryDetails />} />
 
+
           {/* users pages */}
           <Route path="/USauthorList" element={<USauthorList />} />
           <Route path="/UScategoryList" element={<UScategoryList />} />
@@ -50,6 +66,14 @@ function App() {
         </Routes>
       </main>
       <Footer />
+
+{/* users pages */}
+          <Route path="/USauthorList" element={<USauthorList />} />
+          <Route path="/UScategoryList" element={<UScategoryList />} />
+        </Routes>
+      </main>
+      <Footer/>
+
     </div>
   );
 }

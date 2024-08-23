@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Spinner from './Spinner.jsx';
 import { Link } from 'react-router-dom';
-import { getBooks, getAuthors ,getCategories } from '../services/api';
+import { getBooks, getAuthors ,getCategories, getAllList} from '../services/api';
 
 // Placeholder image URL (replace with your own placeholder image)
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
@@ -89,7 +89,26 @@ function HomeBook() {
 
 
 
+  const onButtonClick = (bookId, authorId) =>  {
+    const IdUser = localStorage.getItem("IdUser");
+    const fetchlistuser = async () => {
 
+        try {
+          const response = await getAllList({
+            user: IdUser,
+            author: authorId,
+            book: bookId,
+            status: "read",
+          });
+          console.log(IdUser)
+          console.log(authorId)
+          console.log(bookId)
+      } catch (error) {
+          console.error('Error updating books:', error);
+      }
+      };
+      fetchlistuser()
+  };
 
 
 
@@ -119,6 +138,14 @@ function HomeBook() {
               <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
               <p className="text-gray-600 mt-1">Author: {getauthValue(book.AuthorId)}</p>
               <p className="text-gray-600 mt-1">Category: {getcatValue(book.Category)}</p>
+            </div>
+            <div>
+            <button
+                    onClick={() => onButtonClick(book._id, book.AuthorId)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Add to Shelf
+            </button>
             </div>
           </div>
           

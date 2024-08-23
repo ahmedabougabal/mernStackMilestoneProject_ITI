@@ -156,7 +156,7 @@ function BookList() {
             {index + 1}
           </td>
           <td className='border border-slate-700 rounded-md text-center max-md:hidden flex justify-center p-0'>
-           {book.image && <img src={book.image || placeholderImage} alt={book.title} className="w-1/3 h-1/2 object-cover" />}
+           {book.image && <img src={book.image} alt={book.title} className="w-1/4 h-1/3 object-cover" />}
           </td>
           <td className='border border-slate-700 rounded-md text-center'>
             {/* {book.name} */}
@@ -193,32 +193,6 @@ function BookList() {
         )}
   </>
 
-
-    // <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-    //   {books.length > 0 ? (
-    //     books.map((book) => (
-    //       <div
-    //         key={book._id}
-    //         className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
-    //       >
-    //         <div className="w-full h-64 overflow-hidden">
-    //           <img
-    //             src={book.image || placeholderImage} // Use placeholder image if no book image
-    //             alt={book.title}
-    //             className="w-full h-full object-cover"
-    //           />
-    //         </div>
-    //         <div className="p-4 flex-1">
-    //           <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-    //           <p className="text-gray-600 mt-1">Author: {book.author}</p>
-    //           <p className="text-gray-600 mt-1">Category: {book.category}</p>
-    //         </div>
-    //       </div>
-    //     ))
-    //   ) : (
-    //     <p className="text-gray-600">No books available</p>
-    //   )}
-    // </div>
   );
 }
 
