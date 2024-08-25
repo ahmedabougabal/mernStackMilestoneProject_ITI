@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 import { BrowserRouter, Route, RouterProvider, createRoutesFromElements, createBrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+// import { Provider } from 'react-redux';
+// import store from './redux/store';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
-// Auth Components
+// Auth Components  
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 
