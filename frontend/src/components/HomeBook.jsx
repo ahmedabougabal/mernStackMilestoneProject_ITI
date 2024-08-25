@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Spinner from './Spinner.jsx';
 import { Link } from 'react-router-dom';
-import { getBooks, getAuthors ,getCategories, getAllList} from '../services/api';
+import { getBooks, getAuthors, getCategories, getAllList } from '../services/api';
 
-// Placeholder image URL (replace with your own placeholder image)
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
 
 function HomeBook() {
@@ -14,33 +13,21 @@ function HomeBook() {
   const [categories, setCategories] = useState([]);
   const [categoryname, setCategoryname] = useState({});
 
-
-
-
-
-
   useEffect(() => {
     setLoading(true);
     getBooks()
-      .then((response) =>{setBooks(response.data.data);setLoading(false);
-      }) // Access `data` property
+      .then((response) => {
+        setBooks(response.data.data);
+        setLoading(false);
+      })
       .catch((error) => console.error('Error fetching books:', error));
   }, []);
-
-
-
-
-
-
-
-
 
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
         const response = await getAuthors();
         setAuthors(response.data.data);
-        // console.log(authors)
       } catch (error) {
         setError(error.message || 'Error fetching authors');
       }
@@ -48,12 +35,10 @@ function HomeBook() {
     fetchAuthors();
   }, []);
 
-
   useEffect(() => {
-    authors.forEach(auth => {
-      setAuthorname((pre)=> ({...pre , [auth._id]:`${auth.firstName}  ${auth.lastName}`}))
+    authors.forEach((auth) => {
+      setAuthorname((pre) => ({ ...pre, [auth._id]: `${auth.firstName} ${auth.lastName}` }));
     });
-    // console.log(JSON.stringify(authorname, null, 2))
   }, [authors]);
 
   useEffect(() => {
@@ -68,93 +53,75 @@ function HomeBook() {
     fetchCat();
   }, []);
 
-
   useEffect(() => {
-    categories.forEach(auth => {
-      setCategoryname((pre)=> ({...pre , [auth._id]:auth.name}))
+    categories.forEach((cat) => {
+      setCategoryname((pre) => ({ ...pre, [cat._id]: cat.name }));
     });
   }, [categories]);
 
+  const getauthValue = (key) => authorname[key] || key;
+  const getcatValue = (key) => categoryname[key] || key;
 
-
-
-  const getauthValue = (key) => {
-    // console.log(authorname[key])
-    return authorname[key] || key;
-  };
-  const getcatValue = (key) => {
-    return categoryname[key] || key ;
-  };
-
-
-
-
-  const onButtonClick = (bookId, authorId) =>  {
-    const IdUser = localStorage.getItem("IdUser");
+  const onButtonClick = (bookId, authorId) => {
+    const IdUser = localStorage.getItem('IdUser');
     const fetchlistuser = async () => {
-
-        try {
-          const response = await getAllList({
-            user: IdUser,
-            author: authorId,
-            book: bookId,
-            status: "read",
-          });
-          console.log(IdUser)
-          console.log(authorId)
-          console.log(bookId)
+      try {
+        await getAllList({
+          user: IdUser,
+          author: authorId,
+          book: bookId,
+          status: 'read',
+        });
       } catch (error) {
-          console.error('Error updating books:', error);
+        console.error('Error updating books:', error);
       }
-      };
-      fetchlistuser()
+    };
+    fetchlistuser();
   };
-
-
-
 
   return (
     <>
-    {loading ? (
-      <Spinner /> ) : (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-      {books.length > 0 ? (
-        books.map((book) => (
-          <div
-            key={book._id}
-            className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
-
-          >
-            <div className="w-full h-100 overflow-hidden">
-            <Link to={`/books/details/${book._id}`}>
-              <img
-                src={book.image || placeholderImage} // Use placeholder image if no book image
-                alt={book.title}
-                className="w-full h-full object-fit"
-              />
-              </Link>
-            </div>
-            <div className="p-4 flex-1">
-              <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
-              <p className="text-gray-600 mt-1">Author: {getauthValue(book.AuthorId)}</p>
-              <p className="text-gray-600 mt-1">Category: {getcatValue(book.Category)}</p>
-            </div>
-            <div>
-            <button
-                    onClick={() => onButtonClick(book._id, book.AuthorId)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Add to Shelf
-            </button>
-            </div>
-          </div>
-          
-        ))
+      {loading ? (
+        <Spinner />
       ) : (
-        <p className="text-gray-600">No books available</p>
+        <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          {books.length > 0 ? (
+            books.map((book) => (
+              <div
+                key={book._id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="w-full h-60 overflow-hidden">
+                  <Link to={`/books/details/${book._id}`}>
+                    <img
+                      src={book.image || placeholderImage}
+                      alt={book.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
+                </div>
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900">{book.title}</h2>
+                    <p className="text-sm text-gray-500 mt-1">Author: {getauthValue(book.AuthorId)}</p>
+                    <p className="text-sm text-gray-500 mt-1">Category: {getcatValue(book.Category)}</p>
+                  </div>
+                  <div className="mt-4">
+                    <button
+                      onClick={() => onButtonClick(book._id, book.AuthorId)}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300"
+                    >
+                      Add to Shelf
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600">No books available</p>
+          )}
+        </div>
       )}
-    </div>
-    )};
     </>
   );
 }
