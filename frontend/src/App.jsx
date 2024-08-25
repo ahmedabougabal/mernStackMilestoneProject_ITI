@@ -32,7 +32,6 @@ function App() {
       <main className="p-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<HomeBook />} />
           <Route path="/Shelf" element={<Shelf />} /> 
           <Route path="/authors" element={<AuthorList />} />
           <Route path="/authors/:id" element={<AuthorDetails />} />
@@ -42,6 +41,7 @@ function App() {
           <Route path="/categories/:id" element={<CategoryDetails />} />
 
 {/* users pages */}
+          <Route path="/" element={<HomeBook />} />
           <Route path="/USauthorList" element={<USauthorList />} />
           <Route path="/UScategoryList" element={<UScategoryList />} />
         </Routes>

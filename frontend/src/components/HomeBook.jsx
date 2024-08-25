@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Spinner from './Spinner.jsx';
 import { Link } from 'react-router-dom';
+import StarRating from './StarRating';
 import { getBooks, getAuthors, getCategories, getAllList } from '../services/api';
 
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
@@ -96,11 +97,12 @@ function HomeBook() {
                     <img
                       src={book.image || placeholderImage}
                       alt={book.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
                     />
                   </Link>
                 </div>
                 <div className="p-4 flex-1 flex flex-col justify-between">
+                <StarRating rating={book.rating} />
                   <div>
                     <h2 className="text-lg font-bold text-gray-900">{book.title}</h2>
                     <p className="text-sm text-gray-500 mt-1">Author: {getauthValue(book.AuthorId)}</p>
