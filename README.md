@@ -19,3 +19,19 @@ Here is another MileStone Project,As an IT-ayan the time has come to harness eac
 
 - **Technologies Used**: React, Node.js, Express, MongoDB
 - **Features**: User Authentication, CRUD Operations, Real-time Updates, API Integration
+
+## Features:
+- User Authentication and Authorization
+- Comprehensive CRUD Operations
+- Real-time Data Updates
+- API Integration
+- Responsive UI with Modern Design Elements
+- Optimized Performance for Scalability
+
+## Team Members
+This project is a collaborative effort by four ITI students:
+
+- Ibrahim Saber
+- Ahmad Abogabal
+- Mahmoud Ismail
+- Mahmoud Yehia
