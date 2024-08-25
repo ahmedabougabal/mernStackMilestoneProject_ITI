@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getUserList, updateUserList } from '../services/api'; // Import your API function
+import StarRating from './StarRating';
+
 
 const initialBooksData = [];
 
@@ -98,6 +100,7 @@ return (
             <tr className="bg-gray-200">
                 <th className="border px-4 py-2 text-left">Cover</th>
                 <th className="border px-4 py-2 text-left">Name</th>
+                <th className="border px-4 py-2 text-left">Rating</th>
                 <th className="border px-4 py-2 text-left">Author</th>
                 <th className="border px-4 py-2 text-left">Shelf</th>
             </tr>
@@ -114,6 +117,9 @@ return (
                         {book.book.title}
                       </a>
                     ) : 'No Title'}
+                  </td>
+                  <td className="px-4 py-2">
+                  <StarRating rating={book.book.rating} />
                   </td>
                   <td className="px-4 py-2">
                     {book.author ? `${book.author.firstName} ${book.author.lastName}` : 'Unknown Author'}
