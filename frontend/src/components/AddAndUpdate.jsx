@@ -138,9 +138,11 @@ const AddAndUpdate = ({ book, onClose, type }) => {
                         />
                      </div>
                     <br />
+                    <div className="flex justify-center bg-black p-2 mt-5 text-white">
                     {type=="add" ?
                     (<input value="Add book" type="submit" />)
                     :(<input value="update" type="submit" />)}
+                    </div>
                 </form>
    )}
    <div  className="absolute justify-self-center bottom-4 text-3l text-red-600"> {error}</div>
