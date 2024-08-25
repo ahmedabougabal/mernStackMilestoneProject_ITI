@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const CategoryDetails = () => {
@@ -72,11 +73,13 @@ const CategoryDetails = () => {
               className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col"
             >
               <div className="w-full h-64 overflow-hidden">
+              <Link to={`/books/details/${book._id}`}>
                 <img
                   src={book.image || placeholderImage} 
                   alt={book.title}
                   className="w-full h-full object-cover"
                 />
+                </Link>
               </div>
               <div className="p-4 flex-1">
                 <h2 className="text-xl font-semibold text-gray-800">{book.title}</h2>
