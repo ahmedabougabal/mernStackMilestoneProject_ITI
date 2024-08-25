@@ -5,8 +5,8 @@ import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
 import { updateBook } from '../services/api';
 import StarRating from './StarRating';
-import ReviewsList from './ReviewsList';  // Import the ReviewsList component
-import AddReviewForm from './AddReviewForm';  // Import the AddReviewForm component
+import ReviewsList from './ReviewsList';  
+import AddReviewForm from './AddReviewForm';  
 
 const BookDetails = () => {
   const [book, setBook] = useState({});
@@ -66,7 +66,6 @@ const BookDetails = () => {
     }
   }, [book]);
 
-
   const handleUpdateDescription = async () => {
     try {
       const jsondes = { description: description };
@@ -80,7 +79,6 @@ const BookDetails = () => {
 
   const handleAddReview = async (review) => {
     try {
-      console.log(review)
       const response = await axios.put(`http://localhost:5200/books/reviews/${id}`,review);
       setReviews([...reviews, response.data]);
       setNewreview((state)=> !state)
@@ -90,88 +88,79 @@ const BookDetails = () => {
   };
 
   return (
-    <div className="font-sans bg-white">
+    <div className="font-sans bg-gray-50">
       <div className="p-4 lg:max-w-7xl max-w-4xl mx-auto">
         <BackButton />
-        <div className="grid items-start grid-cols-1 lg:grid-cols-5 gap-12 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6 rounded-lg">
-          <div className="lg:col-span-3 w-full lg:sticky top-0 text-center">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 shadow-lg p-8 bg-white rounded-lg">
+          <div className="lg:col-span-2">
             {loading ? (
               <Spinner />
             ) : (
-              <>
-                <div className="px-4 py-10 rounded-lg shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative">
-                  <img
-                    src={book.image || 'https://via.placeholder.com/150'}
-                    alt={book.title}
-                    className="w-3/4 rounded object-cover mx-auto"
-                  />
-                </div>
-
-                <div className="mt-6 flex flex-wrap justify-center gap-6 mx-auto">
-                  <div className="w-24 h-20 flex items-center justify-center rounded-lg p-4 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] cursor-pointer">
-                    <img src={book.image || 'https://via.placeholder.com/150'} alt={book.title} className="w-full" />
-                  </div>
-                </div>
-              </>
+              <div className="text-center">
+                <img
+                  src={book.image || 'https://via.placeholder.com/300x400?text=No+Image'}
+                  alt={book.title}
+                  className="w-64 h-96 object-cover mx-auto rounded-lg shadow-lg"
+                />
+              </div>
             )}
           </div>
 
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-extrabold text-gray-800">{book.title}</h2>
+          <div className="lg:col-span-3">
+            <h2 className="text-4xl font-bold text-gray-900">{book.title}</h2>
             <StarRating rating={rating} />
 
-            <div className="my-4">
-              <span className="text-2xl mr-4 text-gray-500">Id:</span>
-              <span>{book._id}</span>
-            </div>
-            <div className="my-4">
-              <Link to={`/authors/${author._id}`} className="text-blue-500 hover:underline">
-                <span className="text-2xl mr-4 text-gray-500">Author:</span>
-                <span>{`${author.firstName} ${author.lastName}`}</span>
-              </Link>
+            <div className="mt-6">
+              <p className="text-xl text-gray-600">
+                <span className="font-semibold">Book ID:</span> {book._id}
+              </p>
+              <p className="text-xl text-gray-600 mt-2">
+                <span className="font-semibold">Author:</span>{' '}
+                <Link to={`/authors/${author._id}`} className="text-blue-600 hover:underline">
+                  {`${author.firstName} ${author.lastName}`}
+                </Link>
+              </p>
+              <p className="text-xl text-gray-600 mt-2">
+                <span className="font-semibold">Category:</span>{' '}
+                <Link to={`/categories/${category._id}`} className="text-blue-600 hover:underline">
+                  {category.name}
+                </Link>
+              </p>
             </div>
 
-            <div className="my-4">
-              <Link to={`/categories/${category._id}`} className="text-blue-500 hover:underline">
-                <span className="text-2xl mr-4 text-gray-500">Category:</span>
-                <span>{category.name}</span>
-              </Link>
-            </div>
-
-            <div className="my-4">
-              <span className="text-2xl mr-4 text-gray-500">Description:</span>
+            <div className="mt-6">
+              <h3 className="text-2xl font-semibold text-gray-700">Description</h3>
               {edescription ? (
-                <>
-                  <button onClick={handleUpdateDescription} className="text-green-500 hover:text-green-700 mr-2">✅</button>
-                  <br />
+                <div className="mt-4">
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="border p-2 w-full mt-2"
+                    className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500"
                   />
-                </>
+                  <button
+                    onClick={handleUpdateDescription}
+                    className="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                  >
+                    Save
+                  </button>
+                </div>
               ) : (
-                <>
-                  <button onClick={() => setEdescription(true)} className="text-blue-500 hover:text-blue-700 mr-2">✏️</button>
-                  <br />
-                  <p className="mt-2">{book.description}</p>
-                </>
+                <div className="mt-4">
+                  <p className="text-lg text-gray-700">{description}</p>
+                  <button
+                    onClick={() => setEdescription(true)}
+                    className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  >
+                    Edit Description
+                  </button>
+                </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className="mt-16 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
-          <h3 className="text-xl font-bold text-gray-800">Book Information</h3>
-          <ul className="mt-4 space-y-6 text-gray-800">
-            <li className="text-sm">Author <span className="ml-4 float-right">{`${author.firstName} ${author.lastName}`}</span></li>
-            <li className="text-sm">Category <span className="ml-4 float-right">{category.name}</span></li>
-            <li className="text-sm">Description <span className="ml-4 float-right">{book.description}</span></li>
-          </ul>
-        </div>
-
-        <div className="mt-16">
-          <h3 className="text-xl font-bold text-gray-800">Reviews</h3>
+        <div className="mt-12 bg-white p-8 rounded-lg shadow-lg">
+          <h3 className="text-2xl font-bold text-gray-800">Reviews</h3>
           <ReviewsList reviews={reviews} />
           <AddReviewForm onAddReview={handleAddReview} />
         </div>
