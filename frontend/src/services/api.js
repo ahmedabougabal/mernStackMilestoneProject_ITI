@@ -26,6 +26,11 @@ export const updateBook = async (id, bookData) => {
   return await axios.put(`${API_URL}/books/${id}`, bookData);
 };
 
+// add a review
+export const updateBookReview = async (id, bookData) => {
+  return await axios.put(`${API_URL}/books/reviews/${id}`, bookData);
+};
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- authors ---------------------------//
 //------------------------- ----------- ---------------------------//
