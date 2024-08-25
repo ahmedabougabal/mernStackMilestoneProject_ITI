@@ -1,10 +1,10 @@
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 import { BrowserRouter, Route, RouterProvider, createRoutesFromElements, createBrowserRouter } from 'react-router-dom';
-// import { Provider } from 'react-redux';
-// import store from './redux/store';
+import { Provider } from 'react-redux';
+import store from './redux/store.js';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 // Auth Components  
@@ -21,7 +21,7 @@ import AllProducts from './pages/Admin/AllProducts.jsx';
 import ProductUpdate from './pages/Admin/ProductUpdate.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 
-//! needs review
+
 // User Components 
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './pages/User/Profile.jsx';
