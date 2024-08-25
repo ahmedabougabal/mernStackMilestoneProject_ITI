@@ -12,17 +12,19 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 
 // Admin Components
-import AdminRoute from './pages/Admin/AdminRoute';
-import UserList from './pages/Admin/UserList';
-import CategoryList from './pages/Admin/CategoryList';
-import ProductList from './pages/Admin/ProductList';
-import AllProducts from './pages/Admin/AllProducts';
-import ProductUpdate from './pages/Admin/ProductUpdate';
-import AdminDashboard from './pages/Admin/AdminDashboard';
 
-// User Components
+import AdminRoute from './pages/Admin/AdminRoute.jsx';
+import UserList from './pages/Admin/UserList.jsx';
+import CategoryList from './pages/Admin/CategoryList.jsx';
+import ProductList from './pages/Admin/ProductList.jsx';
+import AllProducts from './pages/Admin/AllProducts.jsx';
+import ProductUpdate from './pages/Admin/ProductUpdate.jsx';
+import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
+
+//! needs review
+// User Components 
 import PrivateRoute from './components/PrivateRoute';
-import Profile from './pages/User/Profile';
+import Profile from './pages/User/Profile.jsx';
 import Home from './pages/Home.jsx';
 import Favorites from './pages/Products/Favorites.jsx';
 import ProductDetails from './pages/Products/ProductDetails.jsx';
