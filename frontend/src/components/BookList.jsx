@@ -9,9 +9,7 @@ import AddAndUpdate from './AddAndUpdate';
 import BookDetails from './BookDetails.jsx';
 import { getBooks , getAuthors ,getCategories} from '../services/api'; 
 
-// Placeholder image URL (replace with your own placeholder image)
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
-
 
 function BookList() {
   const [books, setBooks] = useState([]);
@@ -25,12 +23,6 @@ function BookList() {
   const [authorname, setAuthorname] = useState({});
   const [categories, setCategories] = useState([]);
   const [categoryname, setCategoryname] = useState({});
-  
-
-
-
-
-
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -48,9 +40,7 @@ function BookList() {
     fetchBooks();
   }, [changed]);
 
-
-
-    function deleted(deletedBookId){
+  function deleted(deletedBookId){
     setLoading(true);
     axios.delete(`http://localhost:5200/books/${deletedBookId}`)
       .then((response) => {
@@ -61,138 +51,115 @@ function BookList() {
         console.log(error);
         setLoading(false);
       });
-    }
+  }
 
-
-    useEffect(() => {
-      const fetchAuthors = async () => {
-        try {
-          const response = await getAuthors();
-          setAuthors(response.data.data);
-          // console.log(authors)
-        } catch (error) {
-          setError(error.message || 'Error fetching authors');
-        }
-      };
-      fetchAuthors();
-    }, []);
-
-
-    useEffect(() => {
-      authors.forEach(auth => {
-        setAuthorname((pre)=> ({...pre , [auth._id]:`${auth.firstName}  ${auth.lastName}`}))
-      });
-      // console.log(JSON.stringify(authorname, null, 2))
-    }, [authors]);
-
-    useEffect(() => {
-      const fetchCat = async () => {
-        try {
-          const response = await getCategories();
-          setCategories(response.data.data);
-        } catch (error) {
-          setError(error.message || 'Error fetching Categories');
-        }
-      };
-      fetchCat();
-    }, []);
-
-
-    useEffect(() => {
-      categories.forEach(auth => {
-        setCategoryname((pre)=> ({...pre , [auth._id]:auth.name}))
-      });
-    }, [categories]);
-
-    // function author_name(authid){
-    //   authors.forEach(auth => {
-    //     if(auth._id == authid){
-    //       // console.log(auth.firstName + " " + auth.lastName)
-    //       return auth.firstName + " " + auth.lastName;
-    //     }
-    //   });
-    //   }
-
-
-    const getauthValue = (key) => {
-      // console.log(authorname[key])
-      return authorname[key] || key;
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        const response = await getAuthors();
+        setAuthors(response.data.data);
+      } catch (error) {
+        setError(error.message || 'Error fetching authors');
+      }
     };
-    const getcatValue = (key) => {
-      return categoryname[key] || key ;
+    fetchAuthors();
+  }, []);
+
+  useEffect(() => {
+    authors.forEach(auth => {
+      setAuthorname(prev => ({ ...prev, [auth._id]: `${auth.firstName} ${auth.lastName}` }));
+    });
+  }, [authors]);
+
+  useEffect(() => {
+    const fetchCat = async () => {
+      try {
+        const response = await getCategories();
+        setCategories(response.data.data);
+      } catch (error) {
+        setError(error.message || 'Error fetching Categories');
+      }
     };
+    fetchCat();
+  }, []);
 
+  useEffect(() => {
+    categories.forEach(auth => {
+      setCategoryname(prev => ({ ...prev, [auth._id]: auth.name }));
+    });
+  }, [categories]);
 
+  const getauthValue = (key) => authorname[key] || key;
+  const getcatValue = (key) => categoryname[key] || key;
 
   return (
     <>
-    <div className='flex justify-between items-center'>
-    <h1 className='text-3xl my-8'>Books List</h1>
-      <MdOutlineAddBox onClick={() => {setShowModal(true);setShowType("add");setShowBk(("add"))}} className='text-sky-800 text-5xl' />
-  </div>
-  {loading ? (
-   <Spinner />) :(
-    <table className='w-full border-separate border-spacing-2'>
-    <thead>
-      <tr>
-        <th className='border border-slate-600 rounded-md'>No</th>
-        <th className='border border-slate-600 rounded-md max-md:hidden'>
-          image
-        </th>
-        <th className='border border-slate-600 rounded-md'>Title</th>
-        <th className='border border-slate-600 rounded-md max-md:hidden'>
-          Category
-        </th>
-        <th className='border border-slate-600 rounded-md max-md:hidden'>
-          Author
-        </th>
-        <th className='border border-slate-600 rounded-md'>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {books.map((book, index) => (
-        <tr key={book._id} className='h-8'>
-          <td className='border border-slate-700 rounded-md text-center'>
-            {index + 1}
-          </td>
-          <td className='border border-slate-700 rounded-md text-center max-md:hidden flex justify-center p-0'>
-           {book.image && <img src={book.image} alt={book.title} className="w-1/4 h-1/3 object-cover" />}
-          </td>
-          <td className='border border-slate-700 rounded-md text-center'>
-            {/* {book.name} */}
-            {book.title}
-          </td>
+      <div className='flex justify-between items-center mb-6'>
+        <h1 className='text-4xl font-bold text-gray-800'>Books List</h1>
+        <MdOutlineAddBox 
+          onClick={() => { setShowModal(true); setShowType("add"); setShowBk("add"); }} 
+          className='text-green-600 text-5xl hover:text-green-800 cursor-pointer transition duration-300'
+        />
+      </div>
 
-          <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-            {/* {book.Category} */}
-            {getcatValue(book.Category)}
-          </td>
-
-          <td className='border border-slate-700 rounded-md text-center max-md:hidden'>
-            {/* {author_name(book.AuthorId)} */}
-            {/* {book.AuthorId} */}
-            {getauthValue(book.AuthorId)}
-          </td>
-
-          <td className='border border-slate-700 rounded-md text-center'>
-            <div className='flex justify-center gap-x-4'>
-              <Link to={`/books/details/${book._id}`}>
-                <BsInfoCircle className='text-2xl text-green-800' />
-              </Link>
-                <AiOutlineEdit onClick={() => {setShowModal(true);setShowType("update");setShowBk((book._id))}} className='text-2xl text-yellow-600' />
-                <MdOutlineDelete onClick={()  => deleted(book._id)} className='text-2xl text-red-600' />
-            </div>
-            {showModal && ((showBk=="add" || showBk==book._id) &&
-        (<AddAndUpdate book={book} onClose={() =>{ setShowModal(false);setChanged((state)=> !state)} } type={showType}/>)
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="overflow-x-auto">
+          <table className='min-w-full bg-white shadow-md rounded-lg overflow-hidden'>
+            <thead className='bg-gray-100'>
+              <tr>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600'>No</th>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600 max-md:hidden'>Image</th>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600'>Title</th>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600 max-md:hidden'>Category</th>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600 max-md:hidden'>Author</th>
+                <th className='p-4 text-left text-sm font-semibold text-gray-600'>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {books.map((book, index) => (
+                <tr key={book._id} className='border-t hover:bg-gray-50 transition duration-200'>
+                  <td className='p-4 text-sm text-gray-700'>{index + 1}</td>
+                  <td className='p-4 text-sm text-gray-700 max-md:hidden'>
+                    <img 
+                      src={book.image || placeholderImage} 
+                      alt={book.title} 
+                      className="w-16 h-20 object-cover rounded"
+                    />
+                  </td>
+                  <td className='p-4 text-sm text-gray-700'>{book.title}</td>
+                  <td className='p-4 text-sm text-gray-700 max-md:hidden'>{getcatValue(book.Category)}</td>
+                  <td className='p-4 text-sm text-gray-700 max-md:hidden'>{getauthValue(book.AuthorId)}</td>
+                  <td className='p-4 text-sm text-gray-700'>
+                    <div className='flex items-center space-x-4'>
+                      <Link to={`/books/details/${book._id}`} className='text-blue-500 hover:text-blue-700'>
+                        <BsInfoCircle className='text-2xl' />
+                      </Link>
+                      <AiOutlineEdit 
+                        onClick={() => { setShowModal(true); setShowType("update"); setShowBk(book._id); }} 
+                        className='text-yellow-500 hover:text-yellow-700 cursor-pointer transition duration-300'
+                      />
+                      <MdOutlineDelete 
+                        onClick={() => deleted(book._id)} 
+                        className='text-red-500 hover:text-red-700 cursor-pointer transition duration-300'
+                      />
+                    </div>
+                    {showModal && (showBk === "add" || showBk === book._id) && (
+                      <AddAndUpdate 
+                        book={book} 
+                        onClose={() => { setShowModal(false); setChanged(prev => !prev); }} 
+                        type={showType} 
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-        )}
-  </>
-
+    </>
   );
 }
 
