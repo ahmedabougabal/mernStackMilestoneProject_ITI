@@ -1,5 +1,6 @@
 // AddReviewForm.js
-import React, { useState } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const AddReviewForm = ({ onAddReview }) => {
   const [rating, setRating] = useState('');
@@ -63,4 +64,8 @@ const AddReviewForm = ({ onAddReview }) => {
   );
 };
 
-export default AddReviewForm;
+AddReviewForm.propTypes = {
+  onAddReview: PropTypes.func.isRequired,
+};
+
+export default AddReviewForm; 
