@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import './index.css';
 import 'tailwindcss/tailwind.css';
 
 import Navbar from './components/Navbar'; 
+import Footer from './components/Footer'; 
 
 import HomePage from './pages/HomePage';
 import HomeBook from './components/HomeBook';
@@ -16,16 +16,16 @@ import CategoryDetails from './components/CategoryDetails';
 import BookList from './components/BookList';
 import BookDetails from './components/BookDetails.jsx';
 
-import Footer from './components/Footer'; 
-
-//------------------
 import USauthorList from './components/USauthorList';
 import UScategoryList from './components/UScategoryList';
-///////////----------------------------
+
+import Login from './components/Login';
+import Signup from './components/Signup';
+import AdminProfile from './components/AdminProfile';
+import UserProfile from './components/UserProfile';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {  
-
-  
   return (
     <div>
       <Navbar /> 
@@ -40,13 +40,35 @@ function App() {
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/categories/:id" element={<CategoryDetails />} />
 
-{/* users pages */}
+          {/* User pages */}
           <Route path="/" element={<HomeBook />} />
           <Route path="/USauthorList" element={<USauthorList />} />
           <Route path="/UScategoryList" element={<UScategoryList />} />
+
+          {/* Authentication routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Protected routes */}
+          <Route 
+            path="/admin-profile" 
+            element={
+              <ProtectedRoute role="admin">
+                <AdminProfile />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/user-profile" 
+            element={
+              <ProtectedRoute role="user">
+                <UserProfile />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
