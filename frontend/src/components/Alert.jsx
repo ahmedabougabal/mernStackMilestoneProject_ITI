@@ -8,7 +8,7 @@ const CustomSuccessAlert = ({ message, duration = 5000 }) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => {
+      setProgress((prevProgress) => { 
         if (prevProgress <= 0) {
           clearInterval(timer);
           setVisible(false);
