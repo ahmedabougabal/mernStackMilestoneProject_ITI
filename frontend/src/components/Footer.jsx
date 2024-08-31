@@ -29,13 +29,13 @@ const Footer = () => {
                 <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Home</a>
               </li>
               <li className="mb-2">
-                <a href="/books" className="border-b border-solid border-transparent hover:border-white hover:text-white">Books</a>
+                <a href="/" className="border-b border-solid border-transparent hover:border-white hover:text-white">Books</a>
               </li>
               <li className="mb-2">
-                <a href="/authors" className="border-b border-solid border-transparent hover:border-white hover:text-white">Authors</a>
+                <a href="/USauthorList" className="border-b border-solid border-transparent hover:border-white hover:text-white">Authors</a>
               </li>
               <li className="mb-2">
-                <a href="/categories" className="border-b border-solid border-transparent hover:border-white hover:text-white">Categories</a>
+                <a href="/UScategoryList" className="border-b border-solid border-transparent hover:border-white hover:text-white">Categories</a>
               </li>
             </ul>
           </div>
