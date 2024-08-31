@@ -9,7 +9,7 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error("better fill all the credentials? ");
   }
   const userExists = await User.findOne({ email })
-  if (userExists) res.status(400).send("user already exists");
+  if (userExists) return res.status(400).send("user already exists");
 
   const salt = await bcrypt.genSalt(15);
   const hashedPassword= await bcrypt.hash(password, salt)
