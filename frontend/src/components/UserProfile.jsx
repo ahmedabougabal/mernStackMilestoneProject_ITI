@@ -1,27 +1,46 @@
 import { useEffect, useState } from 'react';
-import api from '../utils/api';
 import { Card, Spinner } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 
 function UserProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get('/users/profile');
-        setUser(response.data);
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No authentication token found');
+        }
+
+        const response = await fetch('http://localhost:5200/api/users/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
+
+        const data = await response.json();
+        setUser(data);
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
-        setError("Failed to load user profile");
+        setError(error.message);
+        if (error.message === 'No authentication token found') {
+          navigate('/login');
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <Spinner aria-label="Loading profile..." />;
@@ -42,7 +61,7 @@ function UserProfile() {
           <p className="font-normal text-gray-700 dark:text-gray-400">
             Email: {user.email}
           </p>
-          {/* i will add more user details here :D */}
+          {/* Add more user details here */}
         </Card>
       )}
     </div>

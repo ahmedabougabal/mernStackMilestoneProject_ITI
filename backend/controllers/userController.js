@@ -1,63 +1,83 @@
 import User from "../models/userModel.js";
-import asyncHandler from "../middlewares/asyncHandler.js"
-import bcrypt from 'bcryptjs';
+import asyncHandler from "../middlewares/asyncHandler.js";
+import bcrypt from "bcryptjs";
 import createToken from "../utils/createToken.js";
 
 const createUser = asyncHandler(async (req, res) => {
+  
   const { username, email, password } = req.body;
+
   if (!username || !email || !password) {
-    throw new Error("better fill all the credentials? ");
+    throw new Error("Please fill all the inputs.");
   }
-  const userExists = await User.findOne({ email })
-  if (userExists) res.status(400).send("user already exists");
 
-  const salt = await bcrypt.genSalt(15);
-  const hashedPassword= await bcrypt.hash(password, salt)
+  const userExists = await User.findOne({ email });
+  if (userExists) res.status(400).send("User already exists");
 
-  const newUser = new User({ username, email, password: hashedPassword })
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const newUser = new User({ username, email, password: hashedPassword });
 
   try {
     await newUser.save();
     createToken(res, newUser._id);
+
     res.status(201).json({
-      _id: newUser._id, username: newUser.username, email:
-        newUser.email, isAdmin: newUser.isAdmin,
-    })
+      _id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+      isAdmin: newUser.isAdmin,
+    });
   } catch (error) {
     res.status(400);
-    throw new Error("invalid userdata")
+    throw new Error("Invalid user data");
   }
 });
 
-const loginUser= asyncHandler(async(req, res)=>{
-  const {email, password} = req.body;
-  const existingUser = await User.findOne({email});
+const loginUser = asyncHandler(async (req, res) => {
+  console.log("Login attempt:", req.body);
 
-  if(existingUser){
-    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
-    if(isPasswordValid){
-      createToken(res, existingUser._id)
-
-      res.status(201).json({
-        _id: existingUser._id, username: existingUser.username, email:
-          existingUser.email, isAdmin: existingUser.isAdmin,
-      })  
-      return;
-
-    }
+  if (!req.body || typeof req.body !== 'object') {
+    return res.status(400).json({ message: "Invalid request body" });
   }
+  
+  const { email, password } = req.body;
+  
+  try {
+    const existingUser = await User.findOne({ email });
+    console.log("User found:", existingUser ? "Yes" : "No");
 
+    if (existingUser) {
+      const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+      console.log("Password valid:", isPasswordValid);
 
-})
+      if (isPasswordValid) {
+        const token = createToken(res, existingUser._id);
+        return res.status(200).json({
+          _id: existingUser._id,
+          username: existingUser.username,
+          email: existingUser.email,
+          isAdmin: existingUser.isAdmin,
+          token: token,
+        });
+      }
+    }
+    
+    return res.status(401).json({ message: "Invalid email or password" });
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json({ message: "Server error during login" });
+  }
+});
 
-
-const logoutCurrentUser= asyncHandler(async(req, res)=> {
-  res('jwt', '', {
-    httpOnly: true,
+const logoutCurrentUser = asyncHandler(async (req, res) => {
+  res.cookie("jwt", "", {
+    httyOnly: true,
     expires: new Date(0),
-  })
-res.status(200).json({message: "sorry to see you go! logged out"});
-})
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+});
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
@@ -162,7 +182,7 @@ export {
   logoutCurrentUser,
   getAllUsers,
   getCurrentUserProfile,
-  updateCurrentUserProfile, 
+  updateCurrentUserProfile,
   deleteUserById,
   getUserById,
   updateUserById,

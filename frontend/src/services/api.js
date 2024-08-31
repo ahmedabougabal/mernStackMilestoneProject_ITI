@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '../utils/api'; // importing abou gabal's api
 
 const API_URL = "http://localhost:5200";
 
@@ -8,27 +8,27 @@ const API_URL = "http://localhost:5200";
 
 // Fetch all books
 export const getBooks = async () => {
-  return await axios.get(`${API_URL}/books`);
+  return await api.get(`${API_URL}/books`);
 };
 
 // Fetch a single book by ID
 export const getBookById = async (id) => {
-  return await axios.get(`${API_URL}/books/${id}`);
+  return await api.get(`${API_URL}/books/${id}`);
 };
 
 // Add a new book
 export const addBook = async (bookData) => {
-  return await axios.post(`${API_URL}/books`, bookData);
+  return await api.post(`${API_URL}/books`, bookData);
 };
 
 // Update a book
 export const updateBook = async (id, bookData) => {
-  return await axios.put(`${API_URL}/books/${id}`, bookData);
+  return await api.put(`${API_URL}/books/${id}`, bookData);
 };
 
 // add a review
 export const updateBookReview = async (id, bookData) => {
-  return await axios.put(`${API_URL}/books/reviews/${id}`, bookData);
+  return await api.put(`${API_URL}/books/reviews/${id}`, bookData);
 };
 
 //------------------------- ----------- ---------------------------//
@@ -37,27 +37,27 @@ export const updateBookReview = async (id, bookData) => {
 
 // Fetch all authors
 export const getAuthors = async () => {
-  return await axios.get(`${API_URL}/authors`);
+  return await api.get(`${API_URL}/authors`);
 };
 
 // Add a new Author
 export const addAuthor = async (authorData) => {
-  return await axios.post(`${API_URL}/addAuthor`, authorData);
+  return await api.post(`${API_URL}/addAuthor`, authorData);
 };
 
 // Delete a new Author
 export const deleteAuthor = async (id) => {
-  return await axios.delete(`${API_URL}/authors/${id}`);
+  return await api.delete(`${API_URL}/authors/${id}`);
 };
 
 // Update a Author by ID
 export const updateAuthor = async (id, authorData) => {
-  return await axios.put(`${API_URL}/authors/${id}`, authorData);
+  return await api.put(`${API_URL}/authors/${id}`, authorData);
 };
 
 // Fetch books by author ID
 export const getBooksByAuthor = async (authorId) => {
-  return await axios.get(`${API_URL}/books/author/${authorId}`);
+  return await api.get(`${API_URL}/books/author/${authorId}`);
 };
 
 //------------------------- ----------- ---------------------------//
@@ -66,27 +66,27 @@ export const getBooksByAuthor = async (authorId) => {
 
 // Fetch all categories
 export const getCategories = async () => {
-  return await axios.get(`${API_URL}/categories`);
+  return await api.get(`${API_URL}/categories`);
 };
 
 // Add a new category
 export const addCategory = async (categoryData) => {
-  return await axios.post(`${API_URL}/addCategory`, categoryData);
+  return await api.post(`${API_URL}/addCategory`, categoryData);
 };
 
 // Delete a category by ID
 export const deleteCategory = async (id) => {
-  return await axios.delete(`${API_URL}/categories/${id}`);
+  return await api.delete(`${API_URL}/categories/${id}`);
 };
 
 // Update a category by ID
 export const updateCategory = async (id, categoryData) => {
-  return await axios.put(`${API_URL}/categories/${id}`, categoryData);
+  return await api.put(`${API_URL}/categories/${id}`, categoryData);
 };
 
 // Fetch books by category ID
 export const getBooksByCategory = async (categoryId) => {
-  return await axios.get(`${API_URL}/books/category/${categoryId}`);
+  return await api.get(`${API_URL}/books/category/${categoryId}`);
 };
 
 //------------------------- ----------- ---------------------------//
@@ -95,16 +95,16 @@ export const getBooksByCategory = async (categoryId) => {
 
 // Fetch a single list user by user ID
 export const getUserList = async (id) => {
-  return await axios.get(`${API_URL}/getUserList/${id}`);
+  return await api.get(`${API_URL}/getUserList/${id}`);
 };
 
 // udate user by user ID
 export const updateUserList = async (id, listData) => {
-  return await axios.patch(`${API_URL}/listRead/${id}`, listData);
+  return await api.patch(`${API_URL}/listRead/${id}`, listData);
 };
 
 // add user to the list :)
 
 export const getAllList = async (listData) => {
-  return await axios.post(`${API_URL}/addToRead`, listData);
+  return await api.post(`${API_URL}/addToRead`, listData);
 };

@@ -33,8 +33,6 @@ app.use(
   })
 );
 app.use("/api/users", userRoutes);
-
-// app.use("/books", booksRoute);
 app.use("/books", booksRoute);
 app.use("/", authorRoutes);
 app.use("/", categoryRoutes);
@@ -44,4 +42,4 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.listen(Port, () => console.log(`server running on port: ${Port}`));
+app.listen(Port, () => console.log(`server is up and running on port: ${Port}`));

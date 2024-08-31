@@ -1,9 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -13,6 +14,14 @@ function Navbar() {
       setUserRole(role);
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    setIsAuthenticated(false);
+    setUserRole(null);
+    navigate('/login');
+  };
 
   return (
     <nav className="bg-black text-white p-4 shadow-md">
@@ -38,9 +47,17 @@ function Navbar() {
               <Link to="/signup" className="hover:text-gray-400">Signup</Link>
             </>
           ) : (
-            <Link to={userRole === 'admin' ? '/admin-profile' : '/user-profile'} className="hover:text-gray-400">
-              Profile
-            </Link>
+            <>
+              <Link to={userRole === 'admin' ? '/admin-profile' : '/user-profile'} className="hover:text-gray-400">
+                Profile
+              </Link>
+              <button 
+                onClick={handleLogout} 
+                className="hover:text-red-500"
+              >
+                Logout
+              </button>
+            </>
           )}
         </div>
       </div>

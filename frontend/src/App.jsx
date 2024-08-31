@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import React from 'react';
+// import React from 'react';
 import './index.css';
 import 'tailwindcss/tailwind.css';
 
@@ -51,7 +51,7 @@ function App() {
 
           {/* Protected routes */}
           <Route 
-            path="/admin-profile" 
+            path="/admin" 
             element={
               <ProtectedRoute role="admin">
                 <AdminProfile />
@@ -59,7 +59,7 @@ function App() {
             } 
           />
           <Route 
-            path="/user-profile" 
+            path="/profile" 
             element={
               <ProtectedRoute role="user">
                 <UserProfile />
