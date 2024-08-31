@@ -1,9 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
-import asyncHandler from "./asyncHandler.js";
-
-// will check if the token is valid for login and logout 
-//* will read the JWT from the 'jwt cookie'
+import asyncHandler from "../middlewares/asyncHandler.js";
 const authenticate = asyncHandler(async (req, res, next) => {
   let token;
 
