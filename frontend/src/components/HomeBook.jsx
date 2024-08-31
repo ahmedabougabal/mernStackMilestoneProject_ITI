@@ -13,6 +13,7 @@ function HomeBook() {
   const [authorname, setAuthorname] = useState({});
   const [categories, setCategories] = useState([]);
   const [categoryname, setCategoryname] = useState({});
+  const [searchTerm, setSearchTerm] = useState(''); // State for search term
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +31,7 @@ function HomeBook() {
         const response = await getAuthors();
         setAuthors(response.data.data);
       } catch (error) {
-        setError(error.message || 'Error fetching authors');
+        console.error('Error fetching authors:', error);
       }
     };
     fetchAuthors();
@@ -48,7 +49,7 @@ function HomeBook() {
         const response = await getCategories();
         setCategories(response.data.data);
       } catch (error) {
-        setError(error.message || 'Error fetching Categories');
+        console.error('Error fetching Categories:', error);
       }
     };
     fetchCat();
@@ -80,14 +81,30 @@ function HomeBook() {
     fetchlistuser();
   };
 
+  // Filter books based on the search term
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
+      {/* Search Input */}
+      <div className="p-6">
+        <input
+          type="text"
+          placeholder="Search books..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
       {loading ? (
         <Spinner />
       ) : (
         <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-          {books.length > 0 ? (
-            books.map((book) => (
+          {filteredBooks.length > 0 ? (
+            filteredBooks.map((book) => (
               <div
                 key={book._id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300"
@@ -102,7 +119,7 @@ function HomeBook() {
                   </Link>
                 </div>
                 <div className="p-4 flex-1 flex flex-col justify-between">
-                <StarRating rating={book.rating} />
+                  <StarRating rating={book.rating} />
                   <div>
                     <h2 className="text-lg font-bold text-gray-900">{book.title}</h2>
                     <p className="text-sm text-gray-500 mt-1">Author: {getauthValue(book.AuthorId)}</p>
