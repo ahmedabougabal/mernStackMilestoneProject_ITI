@@ -48,6 +48,8 @@ function App() {
           {/* Authentication routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<UserProfile />} />
+
 
           {/* Protected routes */}
           <Route 
@@ -58,14 +60,14 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          <Route 
+          {/* <Route 
             path="/profile" 
             element={
               <ProtectedRoute role="user">
                 <UserProfile />
               </ProtectedRoute>
             } 
-          />
+          /> */}
         </Routes>
       </main>
       <Footer />

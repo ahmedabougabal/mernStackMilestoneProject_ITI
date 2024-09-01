@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { Book } from "../models/Book.js";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -160,8 +161,22 @@ router.put("/reviews/:id", async (request, response) => {
     const book = await Book.findById(id);
     let sumrate=0;
     let review =book.reviews;
+    let isex=false
     // console.log(review)
+    for (let index = 0; index < review.length; index++) {
+      // console.log(review[index].uId)
+      if(review[index].uId != undefined){
+        if(review[index].uId == request.body.uId ){
+          review.splice(index,1,request.body)
+          isex=true
+          break;
+      }
+      
+    }
+  }
+    if(! isex){
     review.push(request.body)
+    }
     // console.log(review)
     review.forEach(revieww => {
       sumrate+=revieww.rate;
@@ -286,4 +301,32 @@ router.get("/category/:id", async (request, response) => {
     response.status(500).send({ responsemessage: error.message });
   }
 });
+
+
+
+
+
+
+
+
+router.put("/user/cu", async (request, response) => {
+
+const decode =()=>{
+const token = request.body.token;
+// const secretKey = "kfnvcwenniorennernnenkjrnke"
+const secretKey = process.env.JWT_SECRET || "kfnvcwenniorennernnenkjrnke"
+try {
+    const decoded = jwt.verify(token, secretKey);
+    return response.status(200).json(decoded);
+} catch (error) {
+  response.status(500).send({ responsemessage: error.message });
+}
+  }
+decode();
+
+});
+
+
+
+
 export default router;

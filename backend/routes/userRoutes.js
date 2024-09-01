@@ -24,7 +24,7 @@ router.route('/profile').get(authenticate, getCurrentUserProfile).put(authentica
 router
   .route("/:id")
   .delete(authenticate, authorizeAdmin, deleteUserById)
-  .get(authenticate, authorizeAdmin, getUserById)
+  .get(getUserById)
   .put(authenticate, authorizeAdmin, updateUserById);
 
 export default router;

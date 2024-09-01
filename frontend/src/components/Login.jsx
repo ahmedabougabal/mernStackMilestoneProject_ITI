@@ -32,7 +32,7 @@ const LoginForm = () => {
 
       // Check if the user is an admin
       if (data.isAdmin) {
-        navigate('/admin'); // Redirect to admin dashboard
+        navigate('/profile'); // Redirect to admin dashboard
       } else {
         navigate('/profile'); // Redirect to user profile
       }

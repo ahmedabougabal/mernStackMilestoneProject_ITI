@@ -31,6 +31,15 @@ export const updateBookReview = async (id, bookData) => {
   return await api.put(`${API_URL}/books/reviews/${id}`, bookData);
 };
 
+export const getCuser = async (token) => {
+  return await api.put(`${API_URL}/books/user/cu`, token);
+};
+
+export const getCuserd = async (id) => {
+  return await api.get(`${API_URL}/api/users/${id}`);
+};
+
+
 //------------------------- ----------- ---------------------------//
 //-------------------------- authors ---------------------------//
 //------------------------- ----------- ---------------------------//

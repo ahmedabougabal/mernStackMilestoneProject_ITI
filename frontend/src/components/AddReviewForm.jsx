@@ -1,16 +1,20 @@
 // AddReviewForm.js
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import { getCuser,getCuserd} from '../services/api'; // Import your API function
+
 
 const AddReviewForm = ({ onAddReview }) => {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
+  const [userData, setUserData] = useState({}); 
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (rating && comment) {
       const parsedRating = parseFloat(rating);
       if (parsedRating <= 5) {
-        onAddReview({ "rate": parsedRating, "comment": comment , "name":"Anonymous"});
+        onAddReview({ "rate": parsedRating, "comment": comment ,"uId" : userData._id,"name":userData.username});
         setRating('');
         setComment('');
       } else {
@@ -26,6 +30,25 @@ const AddReviewForm = ({ onAddReview }) => {
       setRating(e.target.value);
     }
   };
+
+  useEffect(() => {
+    const fetchuser = async () => {
+      try {
+        const tokenn = localStorage.getItem('token');
+        const response0 = await getCuser({"token": tokenn});
+        // console.log(response.data.userId);
+        const response = await getCuserd(response0.data.userId);
+        console.log(response.data.isAdmin);
+        setUserData(response.data)
+
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchuser();
+  }, []);
+
+
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 p-6 bg-white rounded-lg shadow-md border border-gray-200">

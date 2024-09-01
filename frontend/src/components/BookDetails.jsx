@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import BackButton from './BackButton.jsx';
 import Spinner from '../components/Spinner';
-import { updateBook } from '../services/api';
+import { updateBook ,getCuser,getCuserd} from '../services/api';
 import StarRating from './StarRating';
 import ReviewsList from './ReviewsList';  
 import AddReviewForm from './AddReviewForm';  
@@ -19,6 +19,9 @@ const BookDetails = () => {
   const [rating, setRating] = useState(0);
   const [newreview, setNewreview] = useState(false); 
   const { id } = useParams();
+  const [userData, setUserData] = useState({}); 
+  const [isAdmin, setIsAdmin] = useState(false);
+
 
   useEffect(() => {
     setLoading(true);
@@ -87,6 +90,27 @@ const BookDetails = () => {
     }
   };
 
+
+
+
+
+  useEffect(() => {
+    const fetchuser = async () => {
+      try {
+        const tokenn = localStorage.getItem('token');
+        const response0 = await getCuser({"token": tokenn});
+        // console.log(response.data.userId);
+        const response = await getCuserd(response0.data.userId);
+        console.log(response.data.isAdmin);
+        setIsAdmin(response.data.isAdmin)
+
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchuser();
+  }, []);
+
   return (
     <div className="font-sans bg-gray-50">
       <div className="p-4 lg:max-w-7xl max-w-4xl mx-auto">
@@ -147,12 +171,14 @@ const BookDetails = () => {
               ) : (
                 <div className="mt-4">
                   <p className="text-lg text-gray-700">{description}</p>
+                  {isAdmin?(
                   <button
                     onClick={() => setEdescription(true)}
                     className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                   >
                     Edit Description
                   </button>
+) :(<></>)}
                 </div>
               )}
             </div>

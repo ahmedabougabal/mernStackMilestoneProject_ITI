@@ -1,9 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { getCuser,getCuserd} from '../services/api'; // Import your API function
+
 
 function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +27,29 @@ function Navbar() {
     navigate('/login');
   };
 
+
+
+
+  useEffect(() => {
+    const fetchuser = async () => {
+      try {
+        const tokenn = localStorage.getItem('token');
+        const response0 = await getCuser({"token": tokenn});
+        // console.log(response.data.userId);
+        const response = await getCuserd(response0.data.userId);
+        console.log(response.data.isAdmin);
+        setIsAdmin(response.data.isAdmin)
+
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+    fetchuser();
+  }, [isAuthenticated]);
+
+
+
+
   return (
     <nav className="bg-black text-white p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
@@ -30,16 +57,21 @@ function Navbar() {
           <Link to="/">Goodreads Clone</Link>
         </div>
         <div className="space-x-4">
+          {isAdmin ? ( <>  
           <Link to="/" className="hover:text-gray-400">Home</Link>
           <Link to="/Shelf" className="hover:text-gray-400">Shelf</Link>
           <Link to="/books" className="hover:text-gray-400">Books</Link>
           <Link to="/authors" className="hover:text-gray-400">Authors</Link>
           <Link to="/categories" className="hover:text-gray-400">Categories</Link>
-          
+          </>
+          ):( <>  
           {/* User pages */}
+          <Link to="/" className="hover:text-gray-400">Home</Link>
+          <Link to="/Shelf" className="hover:text-gray-400">Shelf</Link>
           <Link to="/USauthorList" className="hover:text-gray-400">Authors</Link>
           <Link to="/UScategoryList" className="hover:text-gray-400">Categories</Link>
-
+          </>
+          )}
           {/* Authentication links */}
           {!isAuthenticated ? (
             <>
@@ -48,7 +80,7 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Link to={userRole === 'admin' ? '/admin-profile' : '/user-profile'} className="hover:text-gray-400">
+              <Link to={"/profile"} className="hover:text-gray-400">
                 Profile
               </Link>
               <button 
