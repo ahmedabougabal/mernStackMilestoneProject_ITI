@@ -106,38 +106,42 @@ return (
             </tr>
             </thead>
             <tbody>
-              {paginatedBooks.map((book, index) => (
-                <tr key={index} className="border-t">
-                  <td className="px-4 py-2">
-                    {book.book ? <img src={book.book.image} alt={book.book.title} className="w-12 h-12" /> : 'No Cover'}
-                  </td>
-                  <td className="px-4 py-2 text-blue-500 cursor-pointer">
-                    {book.book ? (
-                      <a href={`http://localhost:5173/books/details/${book.book._id}`} className="hover:underline">
-                        {book.book.title}
-                      </a>
-                    ) : 'No Title'}
-                  </td>
-                  <td className="px-4 py-2">
-                  <StarRating rating={book.book.rating} />
-                  </td>
-                  <td className="px-4 py-2">
-                    {book.author ? `${book.author.firstName} ${book.author.lastName}` : 'Unknown Author'}
-                  </td>
-                  <td className="px-4 py-2">
-                    <select 
-                      className="border rounded p-1" 
-                      value={book.status} 
-                      onChange={(e) => handleShelfChange(book._id, e.target.value)}
-                    >
-                      <option value="read">read</option>
-                      <option value="reading">reading</option>
-                      <option value="want">want to read</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {paginatedBooks.map((book, index) => (
+    <tr key={index} className="border-t">
+      <td className="px-4 py-2">
+        {book.book ? <img src={book.book.image} alt={book.book.title} className="w-12 h-12" /> : 'No Cover'}
+      </td>
+      <td className="px-4 py-2 text-blue-500 cursor-pointer">
+        {book.book ? (
+          <a href={`http://localhost:5173/books/details/${book.book._id}`} className="hover:underline">
+            {book.book.title}
+          </a>
+        ) : 'No Title'}
+      </td>
+      <td className="px-4 py-2">
+        {book.book && book.book.rating !== undefined ? (
+          <StarRating rating={book.book.rating} />
+        ) : (
+          'No Rating'
+        )}
+      </td>
+      <td className="px-4 py-2">
+        {book.author ? `${book.author.firstName} ${book.author.lastName}` : 'Unknown Author'}
+      </td>
+      <td className="px-4 py-2">
+        <select 
+          className="border rounded p-1" 
+          value={book.status} 
+          onChange={(e) => handleShelfChange(book._id, e.target.value)}
+        >
+          <option value="read">read</option>
+          <option value="reading">reading</option>
+          <option value="want">want to read</option>
+        </select>
+      </td>
+    </tr>
+  ))}
+</tbody>
           </table>
           <div className="flex justify-center mt-4 space-x-2">
             <button 
