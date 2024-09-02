@@ -7,6 +7,13 @@ function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  // const [userToken, setUserToken] = useState(localStorage.getItem('token'));
+  const [olduserToken, setOldUserToken] = useState("");
+
+
+  if(olduserToken != localStorage.getItem('token')){
+    setOldUserToken(localStorage.getItem('token'))
+  }
 
   const navigate = useNavigate();
 
@@ -34,18 +41,22 @@ function Navbar() {
     const fetchuser = async () => {
       try {
         const tokenn = localStorage.getItem('token');
+        if(tokenn != null){
         const response0 = await getCuser({"token": tokenn});
         // console.log(response.data.userId);
         const response = await getCuserd(response0.data.userId);
         console.log(response.data.isAdmin);
         setIsAdmin(response.data.isAdmin)
+        }else{
+          setIsAdmin(false);
+        }
 
       } catch (error) {
         console.error('Error fetching user:', error);
       }
     };
     fetchuser();
-  }, [isAuthenticated]);
+  }, [olduserToken]);
 
 
 
@@ -73,7 +84,7 @@ function Navbar() {
           </>
           )}
           {/* Authentication links */}
-          {!isAuthenticated ? (
+          {!olduserToken ? (
             <>
               <Link to="/login" className="hover:text-gray-400">Login</Link>
               <Link to="/signup" className="hover:text-gray-400">Signup</Link>
