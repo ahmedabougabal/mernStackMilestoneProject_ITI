@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Spinner from './Spinner.jsx';
 import { Link } from 'react-router-dom';
 import StarRating from './StarRating';
-import { getBooks, getAuthors, getCategories, getAllList } from '../services/api';
+import { getBooks, getAuthors, getCategories, getAllList,getCuser } from '../services/api';
 
 const placeholderImage = 'https://via.placeholder.com/300x400?text=Image+Not+Found';
 
@@ -64,10 +64,34 @@ function HomeBook() {
   const getauthValue = (key) => authorname[key] || key;
   const getcatValue = (key) => categoryname[key] || key;
 
-  const onButtonClick = (bookId, authorId) => {
-    const IdUser = localStorage.getItem('IdUser');
+
+
+
+  // useEffect(() => {
+  //   const fetchuser = async () => {
+  //     try {
+  //       const tokenn = localStorage.getItem('token');
+  //       const response0 = await getCuser({"token": tokenn});
+  //       setIdUser (response0.data.userId)
+  //       console.log(IdUser)
+  
+  //     } catch (error) {
+  //       console.error('Error fetching user:', error);
+  //     }
+  //   };
+  //   fetchuser();
+  // }, []);
+
+
+
+
+
+  const onButtonClick = (bookId, authorId) => {    
     const fetchlistuser = async () => {
       try {
+        const tokenn = localStorage.getItem('token');
+        const response0 = await getCuser({"token": tokenn});
+        const IdUser= response0.data.userId
         await getAllList({
           user: IdUser,
           author: authorId,

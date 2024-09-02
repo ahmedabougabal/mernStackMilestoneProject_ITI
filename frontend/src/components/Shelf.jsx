@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserList, updateUserList } from '../services/api'; // Import your API function
+import { getUserList, updateUserList,getCuser } from '../services/api'; // Import your API function
 import StarRating from './StarRating';
 
 
@@ -9,6 +9,8 @@ function Shelf() {
 const [books, setBooks] = useState(initialBooksData);
 const [currentPage, setCurrentPage] = useState(1);
 const [selectedCategory, setSelectedCategory] = useState('All');
+const [IdUser, setIdUser] = useState("");
+
 const itemsPerPage = 7; // Number of items to show per page
 
 const handlePageChange = (page) => {
@@ -21,7 +23,23 @@ setSelectedCategory(category);
 setCurrentPage(1); // Reset to the first page when category changes
 };
 
-const IdUser = localStorage.getItem("IdUser");
+
+
+
+useEffect(() => {
+  const fetchuser = async () => {
+    try {
+      const tokenn = localStorage.getItem('token');
+      const response0 = await getCuser({"token": tokenn});
+      setIdUser (response0.data.userId)
+      console.log(IdUser)
+
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+  };
+  fetchuser();
+}, []);
 
 useEffect(() => {
 const fetchlistuser = async () => {
